@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow Dictation — Product Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  --bg: #f7f8fb; --surface: #ffffff; --surface2: #eef1f6;
+  --border: rgba(0,0,0,0.06); --border-bright: rgba(0,0,0,0.12);
+  --text: #0f172a; --text-dim: #64748b; --text-light: #94a3b8;
+  --teal: #0d9488; --teal-dim: rgba(13,148,136,0.08);
+  --emerald: #059669; --emerald-dim: rgba(5,150,105,0.08);
+  --blue: #2563eb; --blue-dim: rgba(37,99,235,0.07);
+  --violet: #7c3aed; --violet-dim: rgba(124,58,237,0.07);
+  --amber: #d97706; --amber-dim: rgba(217,119,6,0.07);
+  --rose: #e11d48; --rose-dim: rgba(225,29,72,0.07);
+  --cyan: #0891b2; --cyan-dim: rgba(8,145,178,0.07);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04); --shadow: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08); --radius: 12px; --radius-sm: 8px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c1222; --surface: #151d2e; --surface2: #1a2438;
+    --border: rgba(255,255,255,0.06); --border-bright: rgba(255,255,255,0.12);
+    --text: #e2e8f0; --text-dim: #94a3b8; --text-light: #64748b;
+    --teal: #2dd4bf; --teal-dim: rgba(45,212,191,0.1);
+    --emerald: #34d399; --emerald-dim: rgba(52,211,153,0.1);
+    --blue: #60a5fa; --blue-dim: rgba(96,165,250,0.1);
+    --violet: #a78bfa; --violet-dim: rgba(167,139,250,0.1);
+    --amber: #fbbf24; --amber-dim: rgba(251,191,36,0.1);
+    --rose: #fb7185; --rose-dim: rgba(251,113,133,0.1);
+    --cyan: #22d3ee; --cyan-dim: rgba(34,211,238,0.1);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.2); --shadow: 0 2px 8px rgba(0,0,0,0.25);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.3);
+  }
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body); background: var(--bg);
+  background-image: radial-gradient(ellipse at 25% 0%, var(--teal-dim) 0%, transparent 50%), radial-gradient(ellipse at 75% 100%, var(--blue-dim) 0%, transparent 45%);
+  color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh;
+}
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeScale { from { opacity:0; transform:scale(0.94); } to { opacity:1; transform:scale(1); } }
+.anim { animation: fadeUp 0.45s ease-out both; animation-delay: calc(var(--i,0)*0.06s); }
+.anim-scale { animation: fadeScale 0.4s ease-out both; animation-delay: calc(var(--i,0)*0.06s); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:0.01ms !important; animation-delay:0ms !important; transition-duration:0.01ms !important; } }
+.page { max-width:1080px; margin:0 auto; padding:48px 40px 80px; }
+.hero { text-align:center; margin-bottom:56px; padding-bottom:48px; border-bottom:1px solid var(--border); }
+.hero-eyebrow { font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--teal); margin-bottom:16px; }
+.hero h1 { font-size:44px; font-weight:700; letter-spacing:-1.5px; color:var(--text); line-height:1.1; margin-bottom:12px; }
+.hero-tagline { font-size:18px; color:var(--text-dim); max-width:600px; margin:0 auto 28px; line-height:1.55; }
+.hero-badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:11px; font-weight:600; padding:6px 14px; border-radius:20px; border:1px solid var(--border-bright); background:var(--surface); color:var(--text-dim); box-shadow:var(--shadow-sm); }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; }
+.dot-teal { background:var(--teal); } .dot-emerald { background:var(--emerald); } .dot-blue { background:var(--blue); }
+.section-label { font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--teal); margin-bottom:6px; }
+.section-title { font-size:26px; font-weight:700; letter-spacing:-0.5px; margin-bottom:6px; }
+.section-desc { font-size:14px; color:var(--text-dim); margin-bottom:28px; max-width:560px; }
+section { margin-bottom:56px; }
+.kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:56px; }
+.kpi-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px 20px; text-align:center; box-shadow:var(--shadow); transition:transform 0.2s,box-shadow 0.2s; }
+.kpi-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+.kpi-value { font-family:var(--font-mono); font-size:32px; font-weight:700; line-height:1; margin-bottom:6px; }
+.kpi-unit { font-family:var(--font-mono); font-size:13px; font-weight:500; }
+.kpi-label { font-size:12px; font-weight:500; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.06em; margin-top:2px; }
+.pipeline-wrap { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:32px; box-shadow:var(--shadow); }
+.pipeline { display:flex; align-items:stretch; overflow-x:auto; padding-bottom:4px; }
+.pipeline-step { flex:1; min-width:120px; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px 14px; text-align:center; transition:transform 0.2s; }
+.pipeline-step:hover { transform:translateY(-2px); }
+.step-icon { width:36px; height:36px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:10px; }
+.step-num { font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px; }
+.step-name { font-size:13px; font-weight:600; margin-bottom:4px; }
+.step-detail { font-size:11px; color:var(--text-dim); line-height:1.4; }
+.pipeline-arrow { display:flex; align-items:center; padding:0 6px; color:var(--text-light); font-size:18px; flex-shrink:0; }
+.pipeline-note { font-size:12px; color:var(--text-dim); text-align:center; font-family:var(--font-mono); margin-top:12px; }
+.feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.feature-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:22px 20px; box-shadow:var(--shadow-sm); transition:transform 0.2s,box-shadow 0.2s; }
+.feature-card:hover { transform:translateY(-2px); box-shadow:var(--shadow); }
+.feature-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+.feature-name { font-size:14px; font-weight:600; margin-bottom:6px; }
+.feature-desc { font-size:12px; color:var(--text-dim); line-height:1.55; }
+.usecase-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.usecase-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px 22px; box-shadow:var(--shadow-sm); border-top:3px solid transparent; transition:transform 0.2s,box-shadow 0.2s; }
+.usecase-card:hover { transform:translateY(-2px); box-shadow:var(--shadow); }
+.usecase-badge { font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; padding:3px 10px; border-radius:4px; display:inline-block; margin-bottom:12px; }
+.usecase-title { font-size:15px; font-weight:600; margin-bottom:8px; }
+.usecase-desc { font-size:12px; color:var(--text-dim); line-height:1.55; margin-bottom:12px; }
+.usecase-hook { font-family:var(--font-mono); font-size:11px; font-weight:500; padding:8px 12px; border-radius:6px; line-height:1.45; }
+.uc-defense { border-top-color:var(--blue); } .uc-defense .usecase-badge,.uc-defense .usecase-hook { background:var(--blue-dim); color:var(--blue); }
+.uc-legal { border-top-color:var(--violet); } .uc-legal .usecase-badge,.uc-legal .usecase-hook { background:var(--violet-dim); color:var(--violet); }
+.uc-health { border-top-color:var(--emerald); } .uc-health .usecase-badge,.uc-health .usecase-hook { background:var(--emerald-dim); color:var(--emerald); }
+.uc-finance { border-top-color:var(--cyan); } .uc-finance .usecase-badge,.uc-finance .usecase-hook { background:var(--cyan-dim); color:var(--cyan); }
+.uc-engineering { border-top-color:var(--amber); } .uc-engineering .usecase-badge,.uc-engineering .usecase-hook { background:var(--amber-dim); color:var(--amber); }
+.uc-ai { border-top-color:var(--rose); } .uc-ai .usecase-badge,.uc-ai .usecase-hook { background:var(--rose-dim); color:var(--rose); }
+.table-wrap { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
+.table-scroll { overflow-x:auto; }
+.comp-table { width:100%; border-collapse:collapse; font-size:13px; }
+.comp-table thead th { background:var(--surface2); padding:14px 18px; text-align:left; font-family:var(--font-mono); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); border-bottom:2px solid var(--border-bright); white-space:nowrap; }
+.comp-table thead th:not(:first-child) { text-align:center; }
+.comp-table tbody td { padding:14px 18px; border-bottom:1px solid var(--border); vertical-align:middle; }
+.comp-table tbody td:not(:first-child) { text-align:center; font-family:var(--font-mono); font-size:12px; }
+.comp-table tbody tr:last-child td { border-bottom:none; }
+.comp-table tbody tr:hover { background:var(--teal-dim); }
+.comp-table td:first-child { font-weight:600; }
+.comp-table .highlight-col { background:var(--teal-dim); font-weight:600; color:var(--teal); }
+.comp-table thead .highlight-col { background:var(--teal-dim); color:var(--teal); }
+.check { color:var(--emerald); font-weight:700; } .cross { color:var(--rose); font-weight:500; } .partial { color:var(--amber); font-weight:500; }
+.specs-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.spec-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:22px 20px; box-shadow:var(--shadow-sm); }
+.spec-label { font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light); margin-bottom:10px; }
+.spec-list { list-style:none; font-size:13px; }
+.spec-list li { padding:5px 0 5px 14px; position:relative; line-height:1.5; }
+.spec-list li::before { content:'\203A'; position:absolute; left:0; color:var(--text-light); font-weight:700; }
+.spec-list code { font-family:var(--font-mono); font-size:11px; background:var(--teal-dim); color:var(--teal); padding:1px 6px; border-radius:3px; }
+.footer-cta { text-align:center; padding:48px 32px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+.footer-cta h2 { font-size:24px; font-weight:700; letter-spacing:-0.5px; margin-bottom:8px; }
+.footer-cta p { font-size:14px; color:var(--text-dim); max-width:480px; margin:0 auto 24px; }
+.cta-pills { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+.cta-pill { font-family:var(--font-mono); font-size:12px; font-weight:600; padding:10px 24px; border-radius:8px; border:1px solid var(--border-bright); background:var(--surface2); color:var(--text); transition:all 0.2s; cursor:pointer; }
+.cta-pill:hover { border-color:var(--teal); background:var(--teal-dim); color:var(--teal); }
+.cta-pill--primary { background:var(--teal); color:#fff; border-color:var(--teal); }
+.cta-pill--primary:hover { opacity:0.9; color:#fff; }
+.divider { height:1px; background:var(--border); margin:0 0 56px; }
+@media (max-width:860px) { .page{padding:32px 24px 64px;} .hero h1{font-size:32px;} .kpi-row{grid-template-columns:repeat(2,1fr);} .feature-grid{grid-template-columns:1fr 1fr;} .usecase-grid{grid-template-columns:1fr;} .specs-grid{grid-template-columns:1fr;} .pipeline{flex-wrap:wrap;gap:8px;justify-content:center;} .pipeline-arrow{display:none;} .pipeline-step{min-width:140px;} }
+@media (max-width:520px) { .page{padding:24px 16px 48px;} .hero h1{font-size:26px;} .hero-tagline{font-size:15px;} .kpi-row{grid-template-columns:1fr 1fr;} .feature-grid{grid-template-columns:1fr;} .section-title{font-size:22px;} }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="hero anim" style="--i:0">
+    <div class="hero-eyebrow">Product Overview</div>
+    <h1>Flow Dictation</h1>
+    <p class="hero-tagline">Local, privacy-first voice-to-text for Windows. Speak naturally, get clean text instantly &mdash; powered by AI that runs entirely on your GPU. No cloud. No subscriptions. No data leaves your machine.</p>
+    <div class="hero-badges">
+      <span class="hero-badge"><span class="dot dot-teal"></span> 100% Local</span>
+      <span class="hero-badge"><span class="dot dot-emerald"></span> AI-Powered Cleanup</span>
+      <span class="hero-badge"><span class="dot dot-blue"></span> 2-3s Latency</span>
+    </div>
+  </header>
+  <div class="kpi-row">
+    <div class="kpi-card anim-scale" style="--i:1"><div class="kpi-value" style="color:var(--teal)">0</div><div class="kpi-unit" style="color:var(--teal)">bytes</div><div class="kpi-label">Data Transmitted</div></div>
+    <div class="kpi-card anim-scale" style="--i:2"><div class="kpi-value" style="color:var(--blue)">2-3</div><div class="kpi-unit" style="color:var(--blue)">seconds</div><div class="kpi-label">End-to-End Latency</div></div>
+    <div class="kpi-card anim-scale" style="--i:3"><div class="kpi-value" style="color:var(--violet)">6</div><div class="kpi-unit" style="color:var(--violet)">presets</div><div class="kpi-label">Dictation Modes</div></div>
+    <div class="kpi-card anim-scale" style="--i:4"><div class="kpi-value" style="color:var(--emerald)">1x</div><div class="kpi-unit" style="color:var(--emerald)">purchase</div><div class="kpi-label">No Subscription</div></div>
+  </div>
+  <div class="divider"></div>
+  <section class="anim" style="--i:5">
+    <div class="section-label">Architecture</div><div class="section-title">How It Works</div>
+    <p class="section-desc">A four-step pipeline that transforms speech into polished, ready-to-use text &mdash; entirely on-device.</p>
+    <div class="pipeline-wrap"><div class="pipeline">
+      <div class="pipeline-step"><div class="step-icon" style="background:var(--teal-dim)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><rect x="9" y="1" width="6" height="15" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="23"/></svg></div><div class="step-num" style="color:var(--teal)">Step 1</div><div class="step-name">Record</div><div class="step-detail">Hold hotkey and speak. VAD detects silence, auto-stops after 3s.</div></div>
+      <div class="pipeline-arrow">&rarr;</div>
+      <div class="pipeline-step"><div class="step-icon" style="background:var(--blue-dim)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="step-num" style="color:var(--blue)">Step 2</div><div class="step-name">Transcribe</div><div class="step-detail">faster-whisper (large-v3-turbo) on GPU converts speech to raw text.</div></div>
+      <div class="pipeline-arrow">&rarr;</div>
+      <div class="pipeline-step"><div class="step-icon" style="background:var(--violet-dim)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16"/><path d="M9 4v16"/></svg></div><div class="step-num" style="color:var(--violet)">Step 3</div><div class="step-name">AI Cleanup</div><div class="step-detail">Local LLM (Qwen2.5-7B) fixes grammar, punctuation, tone &amp; formatting.</div></div>
+      <div class="pipeline-arrow">&rarr;</div>
+      <div class="pipeline-step"><div class="step-icon" style="background:var(--emerald-dim)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 11h5"/><path d="M8 15h8"/></svg></div><div class="step-num" style="color:var(--emerald)">Step 4</div><div class="step-name">Paste</div><div class="step-detail">Clean text is pasted directly into the active window via clipboard.</div></div>
+    </div><div class="pipeline-note">Entire pipeline runs on your NVIDIA RTX GPU &mdash; zero network calls</div></div>
+  </section>
+  <div class="divider"></div>
+  <section>
+    <div class="section-label anim" style="--i:6">Capabilities</div><div class="section-title anim" style="--i:6">Key Features</div>
+    <p class="section-desc anim" style="--i:6">Everything runs locally. No cloud dependency for any feature.</p>
+    <div class="feature-grid">
+      <div class="feature-card anim" style="--i:7"><div class="feature-icon" style="background:var(--teal-dim)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="feature-name">100% Local Processing</div><div class="feature-desc">No audio or text ever leaves your machine. CMMC 2.0, ITAR, and HIPAA compliant by architecture, not policy.</div></div>
+      <div class="feature-card anim" style="--i:8"><div class="feature-icon" style="background:var(--violet-dim)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m11-7h-6m-6 0H1m15.5-6.5l-4.3 4.3m-2.4 2.4L5.5 18.5m13-1l-4.3-4.3m-2.4-2.4L5.5 5.5"/></svg></div><div class="feature-name">AI Text Cleanup</div><div class="feature-desc">A 7B-parameter LLM corrects grammar, adds punctuation, adjusts tone, and formats text &mdash; no more editing raw transcripts.</div></div>
+      <div class="feature-card anim" style="--i:9"><div class="feature-icon" style="background:var(--blue-dim)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 3v18"/></svg></div><div class="feature-name">6 Dictation Presets</div><div class="feature-desc">General, Email/Formal, Chat/Casual, Code, Technical/Docs, and Custom. Each adapts the LLM's output style.</div></div>
+      <div class="feature-card anim" style="--i:10"><div class="feature-icon" style="background:var(--amber-dim)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div><div class="feature-name">Push-to-Talk</div><div class="feature-desc">Hold Right Ctrl to record, release to process. VAD auto-stops after 3s silence. Hold or toggle modes available.</div></div>
+      <div class="feature-card anim" style="--i:11"><div class="feature-icon" style="background:var(--emerald-dim)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div><div class="feature-name">Personal Dictionary</div><div class="feature-desc">Add industry jargon, names, and acronyms. Whisper biases recognition toward your custom vocabulary.</div></div>
+      <div class="feature-card anim" style="--i:12"><div class="feature-icon" style="background:var(--rose-dim)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="2" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div><div class="feature-name">Snippet Library</div><div class="feature-desc">Trigger phrases that expand to full text blocks. Say your trigger, get your boilerplate inserted automatically.</div></div>
+    </div>
+  </section>
+  <div class="divider"></div>
+  <section>
+    <div class="section-label anim" style="--i:13">Use Cases</div><div class="section-title anim" style="--i:13">Who It's For</div>
+    <p class="section-desc anim" style="--i:13">Six high-value verticals where local processing is a requirement, not a preference.</p>
+    <div class="usecase-grid">
+      <div class="usecase-card uc-defense anim" style="--i:14"><span class="usecase-badge">Defense</span><div class="usecase-title">Classified Programs</div><div class="usecase-desc">Engineers on air-gapped networks producing technical documentation, program briefings, and after-action reports. Cloud dictation is impossible.</div><div class="usecase-hook">100K+ defense engineers type documentation manually because no local dictation tool exists at this quality level.</div></div>
+      <div class="usecase-card uc-legal anim" style="--i:15"><span class="usecase-badge">Legal</span><div class="usecase-title">Law Firms</div><div class="usecase-desc">Attorneys dictating privileged communications, deal terms, and litigation strategy. Cloud = third-party processor = privilege risk.</div><div class="usecase-hook">Dragon NaturallySpeaking: $699/seat, no AI cleanup, aging models. AmLaw 100 firms spend six figures annually on it.</div></div>
+      <div class="usecase-card uc-health anim" style="--i:16"><span class="usecase-badge">Healthcare</span><div class="usecase-title">Clinical Documentation</div><div class="usecase-desc">High-sensitivity departments (behavioral health, substance abuse, reproductive health) where cloud voice data is a non-starter.</div><div class="usecase-hook">Complements cloud ambient AI. Covers the cases where sending voice data off-device is not acceptable.</div></div>
+      <div class="usecase-card uc-finance anim" style="--i:17"><span class="usecase-badge">Finance</span><div class="usecase-title">Trading &amp; Compliance</div><div class="usecase-desc">Trading floor notes, deal memos, research commentary. Every third-party data processor is a line item on the next regulatory audit.</div><div class="usecase-hook">Removes a data processor from SEC/FINRA audit chain. No vendor security review, no DPA negotiation.</div></div>
+      <div class="usecase-card uc-engineering anim" style="--i:18"><span class="usecase-badge">Engineering</span><div class="usecase-title">Field &amp; Design Docs</div><div class="usecase-desc">Engineers with RTX workstations dictating site inspection reports, RFIs, and project documentation. The GPU is already there.</div><div class="usecase-hook">Field engineers dictate 3-4x faster than they type. 30-60 min/day recovered per person on daily site reports.</div></div>
+      <div class="usecase-card uc-ai anim" style="--i:19"><span class="usecase-badge">AI / ML</span><div class="usecase-title">AI Companies</div><div class="usecase-desc">Teams handling proprietary models, training data, and client data under strict contractual controls. Internal tools should match the security posture of the product.</div><div class="usecase-hook">AI companies build private infrastructure for clients but use cloud tools internally. Flow Dictation closes the gap.</div></div>
+    </div>
+  </section>
+  <div class="divider"></div>
+  <section class="anim" style="--i:20">
+    <div class="section-label">Differentiation</div><div class="section-title">How We Compare</div>
+    <p class="section-desc">The only dictation tool that combines local AI transcription with local LLM text cleanup.</p>
+    <div class="table-wrap"><div class="table-scroll"><table class="comp-table">
+      <thead><tr><th>Feature</th><th class="highlight-col">Flow Dictation</th><th>Dragon</th><th>Cloud (Otter, etc.)</th><th>Whisper Wrappers</th></tr></thead>
+      <tbody>
+        <tr><td>100% Local Processing</td><td class="highlight-col"><span class="check">Yes</span></td><td><span class="check">Yes</span></td><td><span class="cross">No</span></td><td><span class="check">Yes</span></td></tr>
+        <tr><td>AI Text Cleanup</td><td class="highlight-col"><span class="check">Yes</span></td><td><span class="cross">No</span></td><td><span class="partial">Cloud AI</span></td><td><span class="cross">No</span></td></tr>
+        <tr><td>Modern AI Models</td><td class="highlight-col"><span class="check">Whisper + LLM</span></td><td><span class="cross">Legacy</span></td><td><span class="check">Yes</span></td><td><span class="partial">Whisper only</span></td></tr>
+        <tr><td>No Data Transmission</td><td class="highlight-col"><span class="check">Zero bytes</span></td><td><span class="check">Yes</span></td><td><span class="cross">All data sent</span></td><td><span class="check">Yes</span></td></tr>
+        <tr><td>Dictation Presets</td><td class="highlight-col"><span class="check">6 + Custom</span></td><td><span class="cross">No</span></td><td><span class="cross">No</span></td><td><span class="cross">No</span></td></tr>
+        <tr><td>Subscription Required</td><td class="highlight-col"><span class="check">No</span></td><td><span class="check">No</span></td><td><span class="cross">Yes</span></td><td><span class="check">No (free)</span></td></tr>
+        <tr><td>Price</td><td class="highlight-col">One-time</td><td>$699/seat</td><td>$15-30/mo</td><td>Free / OSS</td></tr>
+      </tbody>
+    </table></div></div>
+  </section>
+  <div class="divider"></div>
+  <section>
+    <div class="section-label anim" style="--i:21">Technical</div><div class="section-title anim" style="--i:21">Under the Hood</div>
+    <p class="section-desc anim" style="--i:21">Built for NVIDIA RTX workstations that organizations already own.</p>
+    <div class="specs-grid">
+      <div class="spec-card anim" style="--i:22"><div class="spec-label">AI Models</div><ul class="spec-list"><li>Whisper <code>large-v3-turbo</code> via faster-whisper</li><li>Qwen2.5-7B <code>Q4_K_M GGUF</code> via llama-cpp-python</li><li>Both models run on GPU with CUDA acceleration</li><li>~4GB VRAM for Whisper + ~5GB for LLM</li></ul></div>
+      <div class="spec-card anim" style="--i:23"><div class="spec-label">Requirements</div><ul class="spec-list"><li>NVIDIA RTX GPU with <code>8GB+</code> VRAM</li><li>Windows 11</li><li>CUDA 12.x toolkit</li><li>Python 3.12+</li><li>5-minute install, auto-downloads models</li></ul></div>
+      <div class="spec-card anim" style="--i:24"><div class="spec-label">Architecture</div><ul class="spec-list"><li>Python desktop app with pywebview UI</li><li>System tray with color-coded status</li><li>WebRTC VAD for silence detection</li><li>Windows registry auto-start support</li><li>Config stored at <code>%APPDATA%</code></li></ul></div>
+    </div>
+  </section>
+  <div class="divider"></div>
+  <div class="footer-cta anim" style="--i:25">
+    <h2>Ready to See It in Action?</h2>
+    <p>15-minute demo. Full pipeline running live. Dictation to cleaned text in under 3 seconds.</p>
+    <div class="cta-pills"><span class="cta-pill cta-pill--primary">Schedule a Demo</span><span class="cta-pill">Request a Pilot</span><span class="cta-pill">View Documentation</span></div>
+  </div>
+</div>
+</body>
+</html>
