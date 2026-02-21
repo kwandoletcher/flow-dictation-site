@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow Dictation — Go-to-Market Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Sora:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+/* ───────────────────────── TOKENS ───────────────────────── */
+:root {
+  --bg: #faf8f5;
+  --surface: #ffffff;
+  --surface2: #f3f0ec;
+  --surface-elevated: #fffcf8;
+  --border: rgba(0,0,0,0.08);
+  --border-bright: rgba(0,0,0,0.15);
+  --text: #1a1612;
+  --text-dim: #7a7168;
+  --accent: #b45309;
+  --accent-dim: rgba(180,83,9,0.08);
+  --defense: #1d4ed8;
+  --defense-dim: rgba(29,78,216,0.08);
+  --legal: #7c3aed;
+  --legal-dim: rgba(124,58,237,0.08);
+  --health: #059669;
+  --health-dim: rgba(5,150,105,0.08);
+  --finance: #0891b2;
+  --finance-dim: rgba(8,145,178,0.08);
+  --engineering: #d97706;
+  --engineering-dim: rgba(217,119,6,0.08);
+  --ai: #e11d48;
+  --ai-dim: rgba(225,29,72,0.08);
+  --radius: 10px;
+  --radius-lg: 16px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-lg: 0 4px 24px rgba(0,0,0,0.06);
+  --toc-w: 240px;
+  --font-sans: 'Sora', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141210;
+    --surface: #1e1c19;
+    --surface2: #282520;
+    --surface-elevated: #23211d;
+    --border: rgba(255,255,255,0.07);
+    --border-bright: rgba(255,255,255,0.14);
+    --text: #ede8e1;
+    --text-dim: #9a9088;
+    --accent: #f59e0b;
+    --accent-dim: rgba(245,158,11,0.12);
+    --defense: #60a5fa;
+    --defense-dim: rgba(96,165,250,0.12);
+    --legal: #a78bfa;
+    --legal-dim: rgba(167,139,250,0.12);
+    --health: #34d399;
+    --health-dim: rgba(52,211,153,0.12);
+    --finance: #22d3ee;
+    --finance-dim: rgba(34,211,238,0.12);
+    --engineering: #fbbf24;
+    --engineering-dim: rgba(251,191,36,0.12);
+    --ai: #fb7185;
+    --ai-dim: rgba(251,113,133,0.12);
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-lg: 0 4px 24px rgba(0,0,0,0.4);
+  }
+}
+
+/* ───────────────────────── RESET ───────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 15px; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ───────────────────────── LAYOUT ───────────────────────── */
+.wrap {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar TOC */
+.toc {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: var(--toc-w);
+  min-width: var(--toc-w);
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  padding: 32px 0 32px 0;
+  z-index: 100;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-bright) transparent;
+}
+.toc-brand {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.toc-brand h2 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.toc-brand span {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+.toc a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+}
+.toc a:hover {
+  color: var(--text);
+  background: var(--surface2);
+}
+.toc a.active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--accent-dim);
+  font-weight: 600;
+}
+.toc-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border-bright);
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.toc a.active .toc-dot { background: var(--accent); }
+
+/* Main content */
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 48px 56px 96px;
+  max-width: 1200px;
+}
+
+/* ───────────────────────── MOBILE TOC ───────────────────────── */
+@media (max-width: 960px) {
+  .wrap { flex-direction: column; }
+  .toc {
+    position: sticky;
+    top: 0;
+    height: auto;
+    width: 100%;
+    min-width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .toc::-webkit-scrollbar { display: none; }
+  .toc-brand { display: none; }
+  .toc a {
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    padding: 14px 16px;
+    flex-shrink: 0;
+  }
+  .toc a.active {
+    border-left: none;
+    border-bottom-color: var(--accent);
+  }
+  .toc-dot { display: none; }
+  .main { padding: 32px 20px 64px; }
+}
+
+@media (max-width: 600px) {
+  .main { padding: 24px 16px 48px; }
+  html { font-size: 14px; }
+}
+
+/* ───────────────────────── SECTION ───────────────────────── */
+section {
+  margin-bottom: 64px;
+}
+section:last-child { margin-bottom: 0; }
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+h2.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+}
+
+/* ───────────────────────── HERO ───────────────────────── */
+.hero {
+  margin-bottom: 56px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.hero h1 .accent-word { color: var(--accent); }
+.hero .subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+}
+.hero-rule {
+  margin-top: 24px;
+  height: 3px;
+  width: 60px;
+  background: var(--accent);
+  border: none;
+  border-radius: 2px;
+}
+
+/* ───────────────────────── KPI CARDS ───────────────────────── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 960px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .kpi-grid { grid-template-columns: 1fr; } }
+
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.kpi-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+.kpi-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.kpi-label {
+  font-size: 0.82rem;
+  color: var(--text);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.kpi-trend {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--surface2);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* ───────────────────────── TABLES ───────────────────────── */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+thead th {
+  background: var(--surface2);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-bright);
+  white-space: nowrap;
+}
+tbody td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: var(--accent-dim); }
+
+/* Rank column */
+.rank-num {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: var(--surface2);
+}
+.rank-num.top3 {
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+/* Industry badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.badge-defense { background: var(--defense-dim); color: var(--defense); }
+.badge-defense .badge-dot { background: var(--defense); }
+.badge-legal { background: var(--legal-dim); color: var(--legal); }
+.badge-legal .badge-dot { background: var(--legal); }
+.badge-health { background: var(--health-dim); color: var(--health); }
+.badge-health .badge-dot { background: var(--health); }
+.badge-finance { background: var(--finance-dim); color: var(--finance); }
+.badge-finance .badge-dot { background: var(--finance); }
+.badge-engineering { background: var(--engineering-dim); color: var(--engineering); }
+.badge-engineering .badge-dot { background: var(--engineering); }
+.badge-ai { background: var(--ai-dim); color: var(--ai); }
+.badge-ai .badge-dot { background: var(--ai); }
+
+/* Score bar */
+.score-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.score-bar-track {
+  width: 60px;
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.score-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+.score-bar-fill.s10 { width: 100%; background: var(--accent); }
+.score-bar-fill.s9 { width: 90%; background: var(--accent); }
+.score-bar-fill.s8 { width: 80%; background: var(--engineering); }
+.score-bar-fill.s7 { width: 70%; background: var(--finance); }
+.score-num {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+/* Company name styling */
+.company-name {
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Key reason */
+.key-reason {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  max-width: 260px;
+}
+
+/* ───────────────────────── SEGMENT CARDS ───────────────────────── */
+.segment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 960px) { .segment-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .segment-grid { grid-template-columns: 1fr; } }
+
+.segment-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.segment-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+.segment-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.segment-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.segment-name {
+  font-weight: 700;
+  font-size: 1rem;
+}
+.segment-count {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-left: auto;
+  background: var(--surface2);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.segment-body dt {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 12px;
+  margin-bottom: 3px;
+}
+.segment-body dd {
+  font-size: 0.84rem;
+  color: var(--text);
+}
+
+/* ───────────────────────── PERSONA CARDS ───────────────────────── */
+.persona-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-bright) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+.persona-scroll::-webkit-scrollbar { height: 6px; }
+.persona-scroll::-webkit-scrollbar-track { background: transparent; }
+.persona-scroll::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+
+.persona-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  min-width: 260px;
+  max-width: 300px;
+  flex-shrink: 0;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.persona-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+.persona-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+.persona-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.persona-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.persona-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+.persona-val {
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-align: right;
+}
+.hw-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.hw-high { background: var(--health-dim); color: var(--health); }
+.hw-very-high { background: var(--accent-dim); color: var(--accent); }
+.hw-medium-high { background: var(--finance-dim); color: var(--finance); }
+.hw-medium { background: var(--engineering-dim); color: var(--engineering); }
+.hw-low-medium { background: var(--legal-dim); color: var(--legal); }
+
+.persona-desc {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+/* ───────────────────────── COMPETITIVE TABLE ───────────────────────── */
+.highlight-row {
+  background: var(--accent-dim) !important;
+}
+.highlight-row td {
+  font-weight: 600;
+}
+.check { color: var(--health); font-weight: 700; }
+.cross { color: var(--ai); font-weight: 700; }
+.type-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.type-local { background: var(--health-dim); color: var(--health); }
+.type-cloud { background: var(--ai-dim); color: var(--ai); }
+.type-hybrid { background: var(--engineering-dim); color: var(--engineering); }
+
+/* ───────────────────────── PRICING ───────────────────────── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 960px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+.pricing-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s, transform 0.2s;
+  position: relative;
+}
+.pricing-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+.pricing-card.featured {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), var(--shadow-lg);
+}
+.pricing-card.featured::before {
+  content: 'Most Popular';
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: #fff;
+  padding: 3px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.pricing-tier {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.pricing-price {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.pricing-price .currency {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  vertical-align: super;
+}
+.pricing-period {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-bottom: 18px;
+}
+.pricing-features {
+  list-style: none;
+  text-align: left;
+}
+.pricing-features li {
+  font-size: 0.82rem;
+  padding: 6px 0;
+  color: var(--text);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.pricing-features li::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+/* ───────────────────────── REGULATION CALLOUTS ───────────────────────── */
+.reg-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 960px) { .reg-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .reg-grid { grid-template-columns: 1fr; } }
+
+.reg-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.reg-card.reg-gdpr { border-left-color: var(--defense); }
+.reg-card.reg-euai { border-left-color: var(--legal); }
+.reg-card.reg-hipaa { border-left-color: var(--health); }
+.reg-card.reg-corp { border-left-color: var(--ai); }
+.reg-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.reg-stat {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.reg-detail {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+
+/* ───────────────────────── ANIMATIONS ───────────────────────── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.5s ease forwards;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* ───────────────────────── UTILITIES ───────────────────────── */
+.mono { font-family: var(--font-mono); }
+.dim { color: var(--text-dim); }
+.fw600 { font-weight: 600; }
+
+/* Scrollbar for table wrap */
+.table-wrap { scrollbar-width: thin; scrollbar-color: var(--border-bright) transparent; }
+.table-wrap::-webkit-scrollbar { height: 6px; }
+.table-wrap::-webkit-scrollbar-track { background: transparent; }
+.table-wrap::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ════════════════ SIDEBAR TOC ════════════════ -->
+  <nav class="toc" id="toc">
+    <div class="toc-brand">
+      <h2>Flow Dictation</h2>
+      <span>GTM Dashboard v1.0</span>
+    </div>
+    <a href="#hero"><span class="toc-dot"></span>Overview</a>
+    <a href="#kpis"><span class="toc-dot"></span>Market KPIs</a>
+    <a href="#leads"><span class="toc-dot"></span>Enterprise Leads</a>
+    <a href="#segments"><span class="toc-dot"></span>Segment Breakdown</a>
+    <a href="#personas"><span class="toc-dot"></span>Retail Personas</a>
+    <a href="#competitive"><span class="toc-dot"></span>Competitive Landscape</a>
+    <a href="#pricing"><span class="toc-dot"></span>Pricing Strategy</a>
+    <a href="#regulations"><span class="toc-dot"></span>Regulation Stats</a>
+  </nav>
+
+  <!-- ════════════════ MAIN CONTENT ════════════════ -->
+  <div class="main">
+
+    <!-- ──── HERO ──── -->
+    <section class="hero fade-in" id="hero" style="--i: 0;">
+      <h1><span class="accent-word">Flow Dictation</span> — Go-to-Market Dashboard</h1>
+      <p class="subtitle">Lead Research &amp; Market Intelligence · February 2026</p>
+      <hr class="hero-rule">
+    </section>
+
+    <!-- ──── MARKET KPIs ──── -->
+    <section id="kpis">
+      <p class="section-label fade-in" style="--i: 1;">Section 01</p>
+      <h2 class="section-title fade-in" style="--i: 2;">Market KPIs</h2>
+      <p class="section-subtitle fade-in" style="--i: 3;">Key market sizing and hardware landscape data points</p>
+      <div class="kpi-grid">
+        <div class="kpi-card fade-in" style="--i: 4;">
+          <div class="kpi-value">$8.57B</div>
+          <div class="kpi-label">Speech-to-Text Market (2030)</div>
+          <span class="kpi-trend">14.4% CAGR</span>
+        </div>
+        <div class="kpi-card fade-in" style="--i: 5;">
+          <div class="kpi-value">$143B</div>
+          <div class="kpi-label">Edge AI Market (2034)</div>
+          <span class="kpi-trend">21% CAGR</span>
+        </div>
+        <div class="kpi-card fade-in" style="--i: 6;">
+          <div class="kpi-value">40–60M</div>
+          <div class="kpi-label">Qualifying Windows PCs</div>
+          <span class="kpi-trend">NVIDIA 8GB+ VRAM</span>
+        </div>
+        <div class="kpi-card fade-in" style="--i: 7;">
+          <div class="kpi-value">92%</div>
+          <div class="kpi-label">NVIDIA GPU Market Share</div>
+          <span class="kpi-trend">Q2 2025</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ──── ENTERPRISE LEADS ──── -->
+    <section id="leads">
+      <p class="section-label fade-in" style="--i: 8;">Section 02</p>
+      <h2 class="section-title fade-in" style="--i: 9;">Enterprise Lead Priority</h2>
+      <p class="section-subtitle fade-in" style="--i: 10;">Top 20 enterprise targets ranked by fit score across six vertical segments</p>
+      <div class="table-wrap fade-in" style="--i: 11;">
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Company</th>
+              <th>Industry</th>
+              <th>Score</th>
+              <th>Key Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="rank-num top3">1</span></td>
+              <td class="company-name">Northrop Grumman</td>
+              <td><span class="badge badge-defense"><span class="badge-dot"></span>Defense</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s10"></div></div>
+                  <span class="score-num">10/10</span>
+                </div>
+              </td>
+              <td class="key-reason">NVIDIA RTX PRO to 100K employees</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num top3">2</span></td>
+              <td class="company-name">Lockheed Martin</td>
+              <td><span class="badge badge-defense"><span class="badge-dot"></span>Defense</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s10"></div></div>
+                  <span class="score-num">10/10</span>
+                </div>
+              </td>
+              <td class="key-reason">Largest defense contractor, GPU fleet</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num top3">3</span></td>
+              <td class="company-name">Kirkland &amp; Ellis</td>
+              <td><span class="badge badge-legal"><span class="badge-dot"></span>Legal</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s9"></div></div>
+                  <span class="score-num">9/10</span>
+                </div>
+              </td>
+              <td class="key-reason">#1 law firm, privilege sensitivity</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">4</span></td>
+              <td class="company-name">Kaiser Permanente</td>
+              <td><span class="badge badge-health"><span class="badge-dot"></span>Healthcare</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s9"></div></div>
+                  <span class="score-num">9/10</span>
+                </div>
+              </td>
+              <td class="key-reason">Already deployed AI dictation</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">5</span></td>
+              <td class="company-name">JPMorgan Chase</td>
+              <td><span class="badge badge-finance"><span class="badge-dot"></span>Finance</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s9"></div></div>
+                  <span class="score-num">9/10</span>
+                </div>
+              </td>
+              <td class="key-reason">250K employees on AI tools</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">6</span></td>
+              <td class="company-name">Citadel Securities</td>
+              <td><span class="badge badge-finance"><span class="badge-dot"></span>Finance</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s9"></div></div>
+                  <span class="score-num">9/10</span>
+                </div>
+              </td>
+              <td class="key-reason">On-premise GPU, extreme sensitivity</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">7</span></td>
+              <td class="company-name">Booz Allen Hamilton</td>
+              <td><span class="badge badge-defense"><span class="badge-dot"></span>Defense</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s9"></div></div>
+                  <span class="score-num">9/10</span>
+                </div>
+              </td>
+              <td class="key-reason">NVIDIA AI partner, SCIF work</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">8</span></td>
+              <td class="company-name">RTX (Raytheon)</td>
+              <td><span class="badge badge-defense"><span class="badge-dot"></span>Defense</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s9"></div></div>
+                  <span class="score-num">9/10</span>
+                </div>
+              </td>
+              <td class="key-reason">185K employees, NVIDIA partner</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">9</span></td>
+              <td class="company-name">Goldman Sachs</td>
+              <td><span class="badge badge-finance"><span class="badge-dot"></span>Finance</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s8"></div></div>
+                  <span class="score-num">8/10</span>
+                </div>
+              </td>
+              <td class="key-reason">Walled-garden AI environment</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">10</span></td>
+              <td class="company-name">Baker McKenzie</td>
+              <td><span class="badge badge-legal"><span class="badge-dot"></span>Legal</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s8"></div></div>
+                  <span class="score-num">8/10</span>
+                </div>
+              </td>
+              <td class="key-reason">77 offices, 46 countries</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">11</span></td>
+              <td class="company-name">Quinn Emanuel</td>
+              <td><span class="badge badge-legal"><span class="badge-dot"></span>Legal</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s8"></div></div>
+                  <span class="score-num">8/10</span>
+                </div>
+              </td>
+              <td class="key-reason">Pure litigation, constant dictation</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">12</span></td>
+              <td class="company-name">Point72</td>
+              <td><span class="badge badge-finance"><span class="badge-dot"></span>Finance</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s8"></div></div>
+                  <span class="score-num">8/10</span>
+                </div>
+              </td>
+              <td class="key-reason">AI audit logs for SEC</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">13</span></td>
+              <td class="company-name">Palantir</td>
+              <td><span class="badge badge-ai"><span class="badge-dot"></span>AI/Defense</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s8"></div></div>
+                  <span class="score-num">8/10</span>
+                </div>
+              </td>
+              <td class="key-reason">Data sovereignty = business model</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">14</span></td>
+              <td class="company-name">Two Sigma</td>
+              <td><span class="badge badge-finance"><span class="badge-dot"></span>Finance</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s8"></div></div>
+                  <span class="score-num">8/10</span>
+                </div>
+              </td>
+              <td class="key-reason">Massive GPU, proprietary trading</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">15</span></td>
+              <td class="company-name">Latham &amp; Watkins</td>
+              <td><span class="badge badge-legal"><span class="badge-dot"></span>Legal</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s8"></div></div>
+                  <span class="score-num">8/10</span>
+                </div>
+              </td>
+              <td class="key-reason">#2 law firm, M&amp;A sensitivity</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">16</span></td>
+              <td class="company-name">Bechtel</td>
+              <td><span class="badge badge-engineering"><span class="badge-dot"></span>Engineering</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s8"></div></div>
+                  <span class="score-num">8/10</span>
+                </div>
+              </td>
+              <td class="key-reason">NVIDIA GPU, nuclear projects</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">17</span></td>
+              <td class="company-name">Cleveland Clinic</td>
+              <td><span class="badge badge-health"><span class="badge-dot"></span>Healthcare</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s7"></div></div>
+                  <span class="score-num">7/10</span>
+                </div>
+              </td>
+              <td class="key-reason">4K clinicians on AI docs</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">18</span></td>
+              <td class="company-name">Jacobs Solutions</td>
+              <td><span class="badge badge-engineering"><span class="badge-dot"></span>Engineering</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s7"></div></div>
+                  <span class="score-num">7/10</span>
+                </div>
+              </td>
+              <td class="key-reason">NVIDIA GPU, defense/nuclear</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">19</span></td>
+              <td class="company-name">AECOM</td>
+              <td><span class="badge badge-engineering"><span class="badge-dot"></span>Engineering</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s7"></div></div>
+                  <span class="score-num">7/10</span>
+                </div>
+              </td>
+              <td class="key-reason">NVIDIA vGPU case study</td>
+            </tr>
+            <tr>
+              <td><span class="rank-num">20</span></td>
+              <td class="company-name">Scale AI</td>
+              <td><span class="badge badge-ai"><span class="badge-dot"></span>AI/Defense</span></td>
+              <td>
+                <div class="score-cell">
+                  <div class="score-bar-track"><div class="score-bar-fill s7"></div></div>
+                  <span class="score-num">7/10</span>
+                </div>
+              </td>
+              <td class="key-reason">GPU clusters, classified data</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ──── SEGMENT BREAKDOWN ──── -->
+    <section id="segments">
+      <p class="section-label fade-in" style="--i: 12;">Section 03</p>
+      <h2 class="section-title fade-in" style="--i: 13;">Segment Breakdown</h2>
+      <p class="section-subtitle fade-in" style="--i: 14;">Six vertical markets with tailored positioning and buyer profiles</p>
+      <div class="segment-grid">
+
+        <div class="segment-card fade-in" style="--i: 15;">
+          <div class="segment-header">
+            <span class="segment-dot" style="background:var(--defense)"></span>
+            <span class="segment-name">Defense</span>
+            <span class="segment-count">4 leads</span>
+          </div>
+          <dl class="segment-body">
+            <dt>Messaging</dt>
+            <dd>Air-gapped dictation that never leaves the SCIF network</dd>
+            <dt>Decision Maker</dt>
+            <dd>CISO / Chief Digital Officer</dd>
+            <dt>Example</dt>
+            <dd>Northrop Grumman</dd>
+          </dl>
+        </div>
+
+        <div class="segment-card fade-in" style="--i: 16;">
+          <div class="segment-header">
+            <span class="segment-dot" style="background:var(--legal)"></span>
+            <span class="segment-name">Legal</span>
+            <span class="segment-count">4 leads</span>
+          </div>
+          <dl class="segment-body">
+            <dt>Messaging</dt>
+            <dd>Privilege-safe dictation with zero cloud exposure for client data</dd>
+            <dt>Decision Maker</dt>
+            <dd>Managing Partner / CTO</dd>
+            <dt>Example</dt>
+            <dd>Kirkland &amp; Ellis</dd>
+          </dl>
+        </div>
+
+        <div class="segment-card fade-in" style="--i: 17;">
+          <div class="segment-header">
+            <span class="segment-dot" style="background:var(--finance)"></span>
+            <span class="segment-name">Finance</span>
+            <span class="segment-count">5 leads</span>
+          </div>
+          <dl class="segment-body">
+            <dt>Messaging</dt>
+            <dd>On-premise voice-to-text that keeps trading intel off the wire</dd>
+            <dt>Decision Maker</dt>
+            <dd>CTO / Head of Technology</dd>
+            <dt>Example</dt>
+            <dd>Citadel Securities</dd>
+          </dl>
+        </div>
+
+        <div class="segment-card fade-in" style="--i: 18;">
+          <div class="segment-header">
+            <span class="segment-dot" style="background:var(--health)"></span>
+            <span class="segment-name">Healthcare</span>
+            <span class="segment-count">2 leads</span>
+          </div>
+          <dl class="segment-body">
+            <dt>Messaging</dt>
+            <dd>HIPAA-ready clinical dictation with no PHI leaving the workstation</dd>
+            <dt>Decision Maker</dt>
+            <dd>CMIO / VP Health Informatics</dd>
+            <dt>Example</dt>
+            <dd>Kaiser Permanente</dd>
+          </dl>
+        </div>
+
+        <div class="segment-card fade-in" style="--i: 19;">
+          <div class="segment-header">
+            <span class="segment-dot" style="background:var(--engineering)"></span>
+            <span class="segment-name">Engineering</span>
+            <span class="segment-count">3 leads</span>
+          </div>
+          <dl class="segment-body">
+            <dt>Messaging</dt>
+            <dd>Dictation for engineers handling classified specs and nuclear IP</dd>
+            <dt>Decision Maker</dt>
+            <dd>VP IT / Chief Digital Officer</dd>
+            <dt>Example</dt>
+            <dd>Bechtel</dd>
+          </dl>
+        </div>
+
+        <div class="segment-card fade-in" style="--i: 20;">
+          <div class="segment-header">
+            <span class="segment-dot" style="background:var(--ai)"></span>
+            <span class="segment-name">AI / ML</span>
+            <span class="segment-count">2 leads</span>
+          </div>
+          <dl class="segment-body">
+            <dt>Messaging</dt>
+            <dd>Sovereign dictation for teams that make data control their product</dd>
+            <dt>Decision Maker</dt>
+            <dd>CTO / VP Engineering</dd>
+            <dt>Example</dt>
+            <dd>Palantir</dd>
+          </dl>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ──── RETAIL PERSONAS ──── -->
+    <section id="personas">
+      <p class="section-label fade-in" style="--i: 21;">Section 04</p>
+      <h2 class="section-title fade-in" style="--i: 22;">Retail Personas</h2>
+      <p class="section-subtitle fade-in" style="--i: 23;">Seven consumer archetypes with hardware fit, pricing, and channel strategy</p>
+      <div class="persona-scroll fade-in" style="--i: 24;">
+
+        <div class="persona-card">
+          <div class="persona-name">Privacy-Conscious Professional</div>
+          <div class="persona-meta">
+            <div class="persona-row">
+              <span class="persona-label">Hardware</span>
+              <span class="hw-badge hw-high">HIGH</span>
+            </div>
+            <div class="persona-row">
+              <span class="persona-label">WTP</span>
+              <span class="persona-val">$50 – $200</span>
+            </div>
+            <div class="persona-row">
+              <span class="persona-label">Channel</span>
+              <span class="persona-val">LinkedIn</span>
+            </div>
+          </div>
+          <p class="persona-desc">Professionals in regulated industries who refuse to send voice data to cloud APIs and value on-device processing.</p>
+        </div>
+
+        <div class="persona-card">
+          <div class="persona-name">RSI / Accessibility User</div>
+          <div class="persona-meta">
+            <div class="persona-row">
+              <span class="persona-label">Hardware</span>
+              <span class="hw-badge hw-medium-high">MEDIUM-HIGH</span>
+            </div>
+            <div class="persona-row">
+              <span class="persona-label">WTP</span>
+              <span class="persona-val">HIGH willingness</span>
+            </div>
+            <div class="persona-row">
+              <span class="persona-label">Channel</span>
+              <span class="persona-val">r/RSI, Talon Voice</span>
+            </div>
+          </div>
+          <p class="persona-desc">Users with repetitive strain injuries who depend on voice input for daily computer use and will pay for reliability.</p>
+        </div>
+
+        <div class="persona-card">
+          <div class="persona-name">Local AI Enthusiast</div>
+          <div class="persona-meta">
+            <div class="persona-row">
+              <span class="persona-label">Hardware</span>
+              <span class="hw-badge hw-very-high">VERY HIGH</span>
+            </div>
+            <div class="persona-row">
+              <span class="persona-label">WTP</span>
+              <span class="persona-val">$20 – $50</span>
+            </div>
+            <div class="persona-row">
+              <span class="persona-label">Channel</span>
+              <span class="persona-val">r/LocalLLaMA (629K)</span>
+            </div>
+          </div>
+          <p class="persona-desc">Hobbyists who run local models on beefy GPUs and actively seek new on-device AI tools to add to their workflow.</p>
+        </div>
+
+        <div class="persona-card">
+          <div class="persona-name">Writer / Author</div>
+          <div class="persona-meta">
+            <div class="persona-row">
+              <span class="persona-label">Hardware</span>
+              <span class="hw-badge hw-low-medium">LOW-MEDIUM</span>
+            </div>
+            <div class="persona-row">
+              <span class="persona-label">WTP</span>
+              <span class="persona-val">$30 – $80</span>
+            </div>
+            <div class="persona-row">
+              <span class="persona-label">Channel</span>
+              <span class="persona-val">r/writing</span>
+            </div>
+          </div>
+          <p class="persona-desc">Authors and journalists who dictate drafts and value the LLM cleanup to turn rough speech into polished prose.</p>
+        </div>
+
+        <div class="persona-card">
+          <div class="persona-name">Developer / Vibe Coder</div>
+          <div class="persona-meta">
+            <div class="persona-row">
+              <span class="persona-label">Hardware</span>
+              <span class="hw-badge hw-high">HIGH</span>
+            </div>
+            <div class="persona-row">
+              <span class="persona-label">WTP</span>
+              <span class="persona-val">$15 – $50</span>
+            </div>
+            <div class="persona-row">
+              <span class="persona-label">Channel</span>
+              <span class="persona-val">HN, r/programming</span>
+            </div>
+          </div>
+          <p class="persona-desc">Developers with powerful GPUs who want voice-to-code dictation for comments, docs, and commit messages.</p>
+        </div>
+
+        <div class="persona-card">
+          <div class="persona-name">Content Creator</div>
+          <div class="persona-meta">
+            <div class="persona-row">
+              <span class="persona-label">Hardware</span>
+              <span class="hw-badge hw-very-high">VERY HIGH</span>
+            </div>
+            <div class="persona-row">
+              <span class="persona-label">WTP</span>
+              <span class="persona-val">$20 – $50</span>
+            </div>
+            <div class="persona-row">
+              <span class="persona-label">Channel</span>
+              <span class="persona-val">YouTube</span>
+            </div>
+          </div>
+          <p class="persona-desc">Video creators with editing rigs who dictate scripts, captions, and notes throughout their production workflow.</p>
+        </div>
+
+        <div class="persona-card">
+          <div class="persona-name">Student</div>
+          <div class="persona-meta">
+            <div class="persona-row">
+              <span class="persona-label">Hardware</span>
+              <span class="hw-badge hw-medium">MEDIUM</span>
+            </div>
+            <div class="persona-row">
+              <span class="persona-label">WTP</span>
+              <span class="persona-val">$0 – $15</span>
+            </div>
+            <div class="persona-row">
+              <span class="persona-label">Channel</span>
+              <span class="persona-val">r/college</span>
+            </div>
+          </div>
+          <p class="persona-desc">Students with gaming laptops who need fast note-taking and essay drafting via voice during lectures and study sessions.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ──── COMPETITIVE LANDSCAPE ──── -->
+    <section id="competitive">
+      <p class="section-label fade-in" style="--i: 25;">Section 05</p>
+      <h2 class="section-title fade-in" style="--i: 26;">Competitive Landscape</h2>
+      <p class="section-subtitle fade-in" style="--i: 27;">Head-to-head comparison of dictation tools across key dimensions</p>
+      <div class="table-wrap fade-in" style="--i: 28;">
+        <table>
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>Type</th>
+              <th>Platform</th>
+              <th>Price</th>
+              <th>LLM Cleanup?</th>
+              <th>Key Weakness</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="company-name">WhisperTyping</td>
+              <td><span class="type-badge type-local">Local</span></td>
+              <td>Windows</td>
+              <td>Free+</td>
+              <td><span class="cross">No</span></td>
+              <td class="key-reason">No LLM cleanup</td>
+            </tr>
+            <tr>
+              <td class="company-name">OmniDictate</td>
+              <td><span class="type-badge type-local">Local</span></td>
+              <td>Windows</td>
+              <td>Free</td>
+              <td><span class="cross">No</span></td>
+              <td class="key-reason">Basic, no post-processing</td>
+            </tr>
+            <tr>
+              <td class="company-name">Wispr Flow</td>
+              <td><span class="type-badge type-cloud">Cloud</span></td>
+              <td>Cross-platform</td>
+              <td>$15/mo</td>
+              <td><span class="check">Yes (cloud)</span></td>
+              <td class="key-reason">Data leaves machine</td>
+            </tr>
+            <tr>
+              <td class="company-name">Dragon Professional</td>
+              <td><span class="type-badge type-hybrid">Hybrid</span></td>
+              <td>Windows</td>
+              <td>$699</td>
+              <td><span class="cross">No</span></td>
+              <td class="key-reason">Expensive, aging</td>
+            </tr>
+            <tr>
+              <td class="company-name">Sotto</td>
+              <td><span class="type-badge type-local">Local</span></td>
+              <td>macOS</td>
+              <td>$49</td>
+              <td><span class="cross">No</span></td>
+              <td class="key-reason">Mac only</td>
+            </tr>
+            <tr>
+              <td class="company-name">Otter.ai</td>
+              <td><span class="type-badge type-cloud">Cloud</span></td>
+              <td>Web</td>
+              <td>$8/mo</td>
+              <td><span class="check">Yes (cloud)</span></td>
+              <td class="key-reason">Cloud only</td>
+            </tr>
+            <tr>
+              <td class="company-name">Windows Voice</td>
+              <td><span class="type-badge type-cloud">Cloud</span></td>
+              <td>Windows</td>
+              <td>Free</td>
+              <td><span class="cross">No</span></td>
+              <td class="key-reason">Mediocre accuracy</td>
+            </tr>
+            <tr class="highlight-row">
+              <td class="company-name" style="color:var(--accent)">Flow Dictation</td>
+              <td><span class="type-badge type-local">Local</span></td>
+              <td>Windows</td>
+              <td>$49</td>
+              <td><span class="check">Yes (local)</span></td>
+              <td style="color:var(--accent);font-weight:600;font-size:0.82rem">Full local pipeline with LLM cleanup</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ──── PRICING STRATEGY ──── -->
+    <section id="pricing">
+      <p class="section-label fade-in" style="--i: 29;">Section 06</p>
+      <h2 class="section-title fade-in" style="--i: 30;">Pricing Strategy</h2>
+      <p class="section-subtitle fade-in" style="--i: 31;">Simple two-track model: one retail price + enterprise quote</p>
+      <div class="pricing-grid" style="grid-template-columns: 1fr 1fr; max-width: 700px;">
+
+        <div class="pricing-card featured fade-in" style="--i: 32;">
+          <div class="pricing-tier">Individual License</div>
+          <div class="pricing-price"><span class="currency">$</span>49</div>
+          <div class="pricing-period">one-time purchase</div>
+          <ul class="pricing-features">
+            <li>Full Whisper + LLM pipeline</li>
+            <li>All dictation presets + custom</li>
+            <li>Snippet library</li>
+            <li>Personal dictionary</li>
+            <li>VAD + silence detection</li>
+            <li>Lifetime updates</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card fade-in" style="--i: 33;">
+          <div class="pricing-tier">Enterprise / Team</div>
+          <div class="pricing-price" style="font-size:28px">Contact Us</div>
+          <div class="pricing-period">per-seat licensing</div>
+          <ul class="pricing-features">
+            <li>Everything in Individual</li>
+            <li>Volume licensing (per-seat)</li>
+            <li>Invoice / PO support</li>
+            <li>Compliance documentation</li>
+            <li>Priority support</li>
+            <li>Price-discovered per segment</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ──── REGULATIONS ──── -->
+    <section id="regulations">
+      <p class="section-label fade-in" style="--i: 36;">Section 07</p>
+      <h2 class="section-title fade-in" style="--i: 37;">Key Regulation Stats</h2>
+      <p class="section-subtitle fade-in" style="--i: 38;">Regulatory tailwinds that make local-first processing a compliance advantage</p>
+      <div class="reg-grid">
+
+        <div class="reg-card reg-gdpr fade-in" style="--i: 39;">
+          <div class="reg-title">GDPR Fines</div>
+          <div class="reg-stat">EUR 5.65B total</div>
+          <p class="reg-detail">EUR 2.3B in 2025 alone, up 38% year-over-year. Data sovereignty is no longer optional.</p>
+        </div>
+
+        <div class="reg-card reg-euai fade-in" style="--i: 40;">
+          <div class="reg-title">EU AI Act</div>
+          <div class="reg-stat">Aug 2, 2026</div>
+          <p class="reg-detail">Fully applicable deadline. High-risk AI systems face mandatory conformity assessments and audits.</p>
+        </div>
+
+        <div class="reg-card reg-hipaa fade-in" style="--i: 41;">
+          <div class="reg-title">HIPAA</div>
+          <div class="reg-stat">$1.92M / violation / yr</div>
+          <p class="reg-detail">Maximum penalty per violation category per year. PHI in cloud voice APIs is an audit red flag.</p>
+        </div>
+
+        <div class="reg-card reg-corp fade-in" style="--i: 42;">
+          <div class="reg-title">Corporate AI Bans</div>
+          <div class="reg-stat">Major enterprises</div>
+          <p class="reg-detail">Samsung, Apple, Goldman Sachs, and Wells Fargo have all restricted or banned cloud AI tools internally.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- .main -->
+</div><!-- .wrap -->
+
+<!-- ════════════════ SCROLL-SPY JAVASCRIPT ════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  var tocLinks = document.querySelectorAll('#toc a[href^="#"]');
+  var sections = [];
+
+  tocLinks.forEach(function (link) {
+    var id = link.getAttribute('href').slice(1);
+    var el = document.getElementById(id);
+    if (el) sections.push({ id: id, el: el, link: link });
+  });
+
+  function onScroll() {
+    var scrollY = window.scrollY || window.pageYOffset;
+    var viewportH = window.innerHeight;
+    var activeId = sections[0] ? sections[0].id : null;
+
+    for (var i = 0; i < sections.length; i++) {
+      var rect = sections[i].el.getBoundingClientRect();
+      // Section is "active" if its top is above the 40% line of the viewport
+      if (rect.top <= viewportH * 0.4) {
+        activeId = sections[i].id;
+      }
+    }
+
+    tocLinks.forEach(function (link) {
+      link.classList.remove('active');
+    });
+
+    for (var j = 0; j < sections.length; j++) {
+      if (sections[j].id === activeId) {
+        sections[j].link.classList.add('active');
+
+        // On mobile, scroll the toc to show active link
+        if (window.innerWidth <= 960) {
+          var toc = document.getElementById('toc');
+          var linkRect = sections[j].link.getBoundingClientRect();
+          var tocRect = toc.getBoundingClientRect();
+          if (linkRect.left < tocRect.left || linkRect.right > tocRect.right) {
+            sections[j].link.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+          }
+        }
+        break;
+      }
+    }
+  }
+
+  // Throttle scroll handler
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      window.requestAnimationFrame(function () {
+        onScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // Smooth scroll on click
+  tocLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetId = this.getAttribute('href').slice(1);
+      var targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Intersection Observer for fade-in animations
+  if ('IntersectionObserver' in window) {
+    var fadeEls = document.querySelectorAll('.fade-in');
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeEls.forEach(function (el) {
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
+    });
+  }
+
+  // Initial call
+  onScroll();
+})();
+</script>
+
+</body></html>

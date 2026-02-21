@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outreach Templates — Flow Dictation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&amp;family=Noto+Sans+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Light-mode palette (primary) ── */
+:root {
+  --bg: #fdf9f3;
+  --surface: #ffffff;
+  --surface2: #f7f2ea;
+  --surface-elevated: #fffdf8;
+  --border: rgba(0,0,0,0.07);
+  --border-bright: rgba(0,0,0,0.14);
+  --text: #1c1612;
+  --text-dim: #8a7e72;
+  --accent: #9f1239;
+  --accent-dim: rgba(159,18,57,0.06);
+  --defense: #1e40af;
+  --legal: #6d28d9;
+  --health: #047857;
+  --finance: #0e7490;
+  --engineering: #b45309;
+  --ai: #be123c;
+  --defense-bg: rgba(30,64,175,0.06);
+  --legal-bg: rgba(109,40,217,0.06);
+  --health-bg: rgba(4,120,87,0.06);
+  --finance-bg: rgba(14,116,144,0.06);
+  --engineering-bg: rgba(180,83,9,0.06);
+  --ai-bg: rgba(190,18,60,0.06);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --sidebar-bg: #faf6ef;
+}
+
+/* ── Dark-mode fallback ── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1614;
+    --surface: #241f1c;
+    --surface2: #2c2622;
+    --surface-elevated: #302a26;
+    --border: rgba(255,255,255,0.07);
+    --border-bright: rgba(255,255,255,0.14);
+    --text: #ede6dd;
+    --text-dim: #8a7e72;
+    --accent: #f4718c;
+    --accent-dim: rgba(244,113,140,0.1);
+    --defense: #6b8cfa;
+    --legal: #a78bfa;
+    --health: #34d399;
+    --finance: #22d3ee;
+    --engineering: #fbbf24;
+    --ai: #fb7185;
+    --defense-bg: rgba(107,140,250,0.1);
+    --legal-bg: rgba(167,139,250,0.1);
+    --health-bg: rgba(52,211,153,0.1);
+    --finance-bg: rgba(34,211,238,0.1);
+    --engineering-bg: rgba(251,191,36,0.1);
+    --ai-bg: rgba(251,113,133,0.1);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+    --sidebar-bg: #1e1a17;
+  }
+}
+
+/* ── Typography ── */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-weight: 600;
+  line-height: 1.25;
+}
+code, .mono {
+  font-family: 'Noto Sans Mono', 'Courier New', monospace;
+  font-size: 0.875em;
+}
+
+/* ── Layout ── */
+.wrap {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.25rem;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  scrollbar-width: thin;
+}
+.sidebar-brand {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar nav ul {
+  list-style: none;
+}
+.sidebar nav > ul > li {
+  margin-bottom: 0.5rem;
+}
+.sidebar nav a {
+  display: block;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.82rem;
+  font-family: 'Noto Sans Mono', monospace;
+  color: var(--text-dim);
+  text-decoration: none;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+}
+.sidebar nav a:hover {
+  color: var(--text);
+  background: var(--border);
+}
+.sidebar nav a.active {
+  color: var(--accent);
+  background: var(--accent-dim);
+  font-weight: 600;
+}
+.sidebar nav ul ul {
+  margin-left: 0.75rem;
+  margin-top: 0.15rem;
+}
+.sidebar nav ul ul a {
+  font-size: 0.76rem;
+  padding: 0.2rem 0.5rem;
+}
+
+/* ── Main content ── */
+.main {
+  padding: 3rem 3.5rem 6rem;
+  max-width: 860px;
+}
+
+/* ── Header ── */
+.page-header {
+  margin-bottom: 3.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-header h1 {
+  font-size: 2.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+.page-header .subtitle {
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* ── Section headings ── */
+.section-heading {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 3.5rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+}
+.section-desc {
+  color: var(--text-dim);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.75rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+.card + .card {
+  margin-top: 0;
+}
+
+/* ── Segment badge ── */
+.badge {
+  display: inline-block;
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.65rem;
+  border-radius: 3px;
+  margin-bottom: 0.75rem;
+}
+.badge--defense   { color: var(--defense);     background: var(--defense-bg); }
+.badge--legal     { color: var(--legal);       background: var(--legal-bg); }
+.badge--health    { color: var(--health);      background: var(--health-bg); }
+.badge--finance   { color: var(--finance);     background: var(--finance-bg); }
+.badge--engineering { color: var(--engineering); background: var(--engineering-bg); }
+.badge--ai        { color: var(--ai);          background: var(--ai-bg); }
+
+/* ── Subject line ── */
+.subject-line {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+.target-role {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-family: 'Noto Sans Mono', monospace;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Letter card (recessed email body) ── */
+.letter {
+  background: var(--surface2);
+  border-radius: 6px;
+  padding: 1.5rem 1.75rem;
+  margin-top: 0.75rem;
+  position: relative;
+  border: 1px solid var(--border);
+}
+.letter::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 6px 0 0 6px;
+}
+.letter--defense::before   { background: var(--defense); }
+.letter--legal::before     { background: var(--legal); }
+.letter--health::before    { background: var(--health); }
+.letter--finance::before   { background: var(--finance); }
+.letter--engineering::before { background: var(--engineering); }
+.letter--ai::before        { background: var(--ai); }
+
+.letter p {
+  margin-bottom: 0.9rem;
+  font-size: 0.97rem;
+  line-height: 1.75;
+}
+.letter p:last-child {
+  margin-bottom: 0;
+}
+.letter .salutation {
+  margin-bottom: 1rem;
+}
+.letter .closing {
+  margin-top: 1rem;
+}
+.letter .ps {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-style: italic;
+  color: var(--text-dim);
+  font-size: 0.92rem;
+}
+
+/* ── LinkedIn cards ── */
+.linkedin-pair {
+  display: grid;
+  gap: 1rem;
+}
+.linkedin-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  position: relative;
+}
+.linkedin-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 6px 0 0 6px;
+}
+.linkedin-card--defense::before   { background: var(--defense); }
+.linkedin-card--legal::before     { background: var(--legal); }
+.linkedin-card--health::before    { background: var(--health); }
+.linkedin-card--finance::before   { background: var(--finance); }
+.linkedin-card--engineering::before { background: var(--engineering); }
+.linkedin-card--ai::before        { background: var(--ai); }
+
+.linkedin-label {
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-bottom: 0.6rem;
+}
+.linkedin-card p {
+  font-size: 0.93rem;
+  line-height: 1.7;
+  margin-bottom: 0.7rem;
+}
+.linkedin-card p:last-child {
+  margin-bottom: 0;
+}
+.char-count {
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  margin-top: 0.5rem;
+}
+
+/* ── Company cards (personalized emails) ── */
+.company-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+.company-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+.company-hook {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+  font-style: italic;
+}
+.company-card p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+/* ── Community post cards ── */
+.community-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+.community-platform {
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.community-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+.community-card p,
+.community-card li {
+  font-size: 0.93rem;
+  line-height: 1.7;
+  margin-bottom: 0.6rem;
+}
+.community-card ul {
+  margin-left: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.community-card .makers-comment {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.community-card .makers-label {
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+
+/* ── Follow-up cards ── */
+.followup-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+.followup-label {
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+.followup-timing {
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+.followup-card .letter {
+  margin-top: 0.5rem;
+}
+.followup-card .letter::before {
+  background: var(--accent);
+}
+
+/* ── Staggered fade-in ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-in {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+.fade-in:nth-child(1)  { animation-delay: 0.04s; }
+.fade-in:nth-child(2)  { animation-delay: 0.1s; }
+.fade-in:nth-child(3)  { animation-delay: 0.16s; }
+.fade-in:nth-child(4)  { animation-delay: 0.22s; }
+.fade-in:nth-child(5)  { animation-delay: 0.28s; }
+.fade-in:nth-child(6)  { animation-delay: 0.34s; }
+.fade-in:nth-child(7)  { animation-delay: 0.4s; }
+.fade-in:nth-child(8)  { animation-delay: 0.46s; }
+.fade-in:nth-child(9)  { animation-delay: 0.52s; }
+.fade-in:nth-child(10) { animation-delay: 0.58s; }
+
+/* ── Respect reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── Mobile responsive ── */
+@media (max-width: 860px) {
+  .wrap {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: relative;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.25rem;
+  }
+  .sidebar-brand {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+  }
+  .sidebar nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+  .sidebar nav > ul > li {
+    margin-bottom: 0;
+  }
+  .sidebar nav ul ul {
+    display: none;
+  }
+  .sidebar nav a {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    white-space: nowrap;
+  }
+  .main {
+    padding: 2rem 1.5rem 4rem;
+  }
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  .card, .company-card, .community-card, .followup-card {
+    padding: 1.25rem 1.25rem;
+  }
+  .letter {
+    padding: 1rem 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 1.5rem 1rem 3rem;
+  }
+  .page-header h1 {
+    font-size: 1.6rem;
+  }
+  .section-heading {
+    font-size: 1.3rem;
+  }
+}
+
+/* ── Scrollbar styling ── */
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--border-bright);
+  border-radius: 2px;
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ── Sidebar TOC ── -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">Flow Dictation</div>
+    <nav>
+      <ul>
+        <li><a href="#header" data-section="header">Overview</a></li>
+        <li>
+          <a href="#cold-emails" data-section="cold-emails">Cold Emails</a>
+          <ul>
+            <li><a href="#email-defense" data-section="email-defense">Defense</a></li>
+            <li><a href="#email-legal" data-section="email-legal">Legal</a></li>
+            <li><a href="#email-health" data-section="email-health">Healthcare</a></li>
+            <li><a href="#email-finance" data-section="email-finance">Finance</a></li>
+            <li><a href="#email-engineering" data-section="email-engineering">Engineering</a></li>
+            <li><a href="#email-ai" data-section="email-ai">AI / ML</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#linkedin" data-section="linkedin">LinkedIn</a>
+          <ul>
+            <li><a href="#li-defense" data-section="li-defense">Defense</a></li>
+            <li><a href="#li-legal" data-section="li-legal">Legal</a></li>
+            <li><a href="#li-health" data-section="li-health">Healthcare</a></li>
+            <li><a href="#li-finance" data-section="li-finance">Finance</a></li>
+            <li><a href="#li-engineering" data-section="li-engineering">Engineering</a></li>
+            <li><a href="#li-ai" data-section="li-ai">AI / ML</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#personalized" data-section="personalized">Top 5 Leads</a>
+          <ul>
+            <li><a href="#lead-northrop" data-section="lead-northrop">Northrop</a></li>
+            <li><a href="#lead-lockheed" data-section="lead-lockheed">Lockheed</a></li>
+            <li><a href="#lead-kirkland" data-section="lead-kirkland">Kirkland</a></li>
+            <li><a href="#lead-kaiser" data-section="lead-kaiser">Kaiser</a></li>
+            <li><a href="#lead-jpmorgan" data-section="lead-jpmorgan">JPMorgan</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#community" data-section="community">Community</a>
+          <ul>
+            <li><a href="#post-reddit" data-section="post-reddit">Reddit</a></li>
+            <li><a href="#post-hn" data-section="post-hn">Hacker News</a></li>
+            <li><a href="#post-ph" data-section="post-ph">Product Hunt</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#followups" data-section="followups">Follow-Ups</a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ── Main Content ── -->
+  <main class="main">
+
+    <!-- SECTION 1: HEADER -->
+    <header id="header" class="page-header fade-in">
+      <h1>Outreach Templates</h1>
+      <p class="subtitle">Flow Dictation — Ready-to-Send Sales Copy</p>
+    </header>
+
+    <!-- SECTION 2: ENTERPRISE COLD EMAILS -->
+    <section id="cold-emails">
+      <h2 class="section-heading fade-in">Enterprise Cold Emails</h2>
+      <p class="section-desc fade-in">Six segment-specific emails, each tailored to the security posture and procurement reality of the target vertical.</p>
+
+      <!-- Defense -->
+      <div id="email-defense" class="card fade-in">
+        <span class="badge badge--defense">Defense</span>
+        <div class="subject-line">Subject: Dictation that works on air-gapped networks</div>
+        <div class="target-role">VP Digital Transformation / CISO</div>
+        <div class="letter letter--defense">
+          <p class="salutation">Hi [First Name],</p>
+          <p>Your engineers write thousands of pages of technical documentation, program briefings, and after-action reports every month — and most of them are still typing it out manually. Cloud dictation tools are off the table for classified programs, and Dragon NaturallySpeaking is showing its age at $699/seat with no meaningful AI behind it.</p>
+          <p>Flow Dictation is a locally-run voice-to-text application built specifically for environments where data cannot leave the workstation. It runs entirely on NVIDIA RTX GPUs — no network connection, no cloud API, no data exfiltration surface. The pipeline uses faster-whisper for transcription and a local 7B-parameter LLM for intelligent text cleanup, formatting, and punctuation. Everything executes on-device. The application has zero network dependencies and is CMMC 2.0 and ITAR compliant by architecture, not by policy.</p>
+          <p>Here is what makes this relevant to your team right now: your organization already has NVIDIA RTX workstations deployed across engineering programs. Flow Dictation runs on that existing hardware with zero additional infrastructure — no servers, no cloud subscriptions, no BAA negotiations. It installs on the workstation and works.</p>
+          <p>I would like to show you a 15-minute demo tailored to your environment. Would next Tuesday or Wednesday work for a brief call?</p>
+          <p class="closing">Best,<br>[Your Name]</p>
+          <p class="ps">P.S. The average defense engineer spends 35% of their workday on documentation. At 10,000 engineers, even a 15% productivity gain on documentation is worth $40M+ annually in recovered engineering hours.</p>
+        </div>
+      </div>
+
+      <!-- Legal -->
+      <div id="email-legal" class="card fade-in">
+        <span class="badge badge--legal">Legal</span>
+        <div class="subject-line">Subject: Your attorneys' dictation is a privilege risk</div>
+        <div class="target-role">CIO / Director Legal Technology</div>
+        <div class="letter letter--legal">
+          <p class="salutation">Hi [First Name],</p>
+          <p>When an attorney dictates deal terms, litigation strategy, or client communications into a cloud transcription tool, that data passes through a third-party processor. If that processor is breached, the privilege argument gets complicated fast. The Proskauer Rose incident — 184,000 privileged files exposed on an unsecured Azure blob — and Orrick's $8M settlement demonstrated exactly how this plays out.</p>
+          <p>Flow Dictation eliminates this risk entirely. It is a locally-run voice-to-text application where every word stays on the attorney's workstation. The transcription engine (faster-whisper) and the AI text cleanup model (a 7B-parameter LLM) both run on the machine's NVIDIA RTX GPU. No audio is transmitted. No text is transmitted. There is no cloud component, no API call, no third-party data processor to audit.</p>
+          <p>Beyond the security argument, the product is genuinely better for attorneys' workflow. Dictation presets for Email/Formal mode produce properly formatted, professionally toned text. The LLM cleanup handles punctuation, grammar, and structure automatically — something Dragon has never done well. And there is no per-seat subscription. One purchase, runs on hardware your firm likely already owns.</p>
+          <p>I would welcome 15 minutes to walk you through a demo. We are also offering a 30-day pilot for firms that want to test it in practice before a broader rollout. Would either of those be worth exploring?</p>
+          <p class="closing">Best,<br>[Your Name]</p>
+          <p class="ps">P.S. Dragon NaturallySpeaking is $699/seat with no AI cleanup and aging acoustic models. Most AmLaw firms are spending six figures annually on a tool that has not meaningfully improved since 2018.</p>
+        </div>
+      </div>
+
+      <!-- Healthcare -->
+      <div id="email-health" class="card fade-in">
+        <span class="badge badge--health">Healthcare</span>
+        <div class="subject-line">Subject: HIPAA-safe dictation without a BAA</div>
+        <div class="target-role">CMIO / VP Clinical Technology</div>
+        <div class="letter letter--health">
+          <p class="salutation">Hi [First Name],</p>
+          <p>Your clinicians need fast, accurate dictation. The market is pushing cloud ambient AI — Abridge, Ambience, Nuance DAX — and for many use cases, those tools deliver real value. But they all share one architectural reality: patient voice data leaves the clinician's device and is processed on third-party servers. That means BAAs, vendor security reviews, ongoing audit obligations, and residual risk you cannot fully control.</p>
+          <p>Flow Dictation takes a different approach. It runs entirely on the clinician's workstation using the machine's NVIDIA RTX GPU. Faster-whisper handles transcription; a local 7B-parameter LLM handles intelligent text cleanup, formatting, and medical terminology. No audio or text ever leaves the machine. There is no cloud component. HIPAA compliance is simplified to its most basic form: the data never moves, so the risk surface is the workstation itself.</p>
+          <p>This is particularly relevant for departments handling the most sensitive cases — behavioral health, substance abuse, HIV/AIDS records, reproductive health — where even a theoretical breach has outsized legal and reputational consequences. It is also a strong fit for smaller practices and rural clinics that cannot afford enterprise cloud AI contracts but whose clinicians still need efficient documentation tools.</p>
+          <p>Could we schedule a 15-minute demo? I can show the full pipeline running live — dictation to cleaned clinical text in under three seconds.</p>
+          <p class="closing">Best,<br>[Your Name]</p>
+          <p class="ps">P.S. HHS reported $8.3M in HIPAA fines in 2025 alone, with cloud vendor incidents accounting for a growing share. Flow Dictation eliminates cloud vendor risk from your dictation workflow entirely.</p>
+        </div>
+      </div>
+
+      <!-- Finance -->
+      <div id="email-finance" class="card fade-in">
+        <span class="badge badge--finance">Finance</span>
+        <div class="subject-line">Subject: Remove a data processor from your audit chain</div>
+        <div class="target-role">CTO / Head of AI/ML</div>
+        <div class="letter letter--finance">
+          <p class="salutation">Hi [First Name],</p>
+          <p>Every third-party data processor in your technology stack is a line item on your next regulatory audit. Cloud transcription tools — even enterprise-grade ones — process sensitive voice data on external servers. That means another vendor to assess, another data processing agreement to negotiate, another surface for SEC and FINRA examiners to scrutinize under recordkeeping rules.</p>
+          <p>Flow Dictation removes that line item. It is a locally-run voice-to-text application where transcription and AI text cleanup both execute on the user's NVIDIA RTX workstation. No audio leaves the machine. No text leaves the machine. There is no third-party processor, no API dependency, and no cloud infrastructure to audit. For trading floor notes, deal memos, research commentary, and internal communications, the voice data stays exactly where your compliance team wants it — on your controlled hardware.</p>
+          <p>The FINRA 2026 regulatory oversight report signals increased scrutiny on AI tools and data governance. Firms that can demonstrate their AI tools operate entirely within their security perimeter are in a materially stronger position. Flow Dictation was designed for exactly this posture.</p>
+          <p>I would like to show you a 15-minute demo. We can also structure a pilot with your compliance and security teams involved from day one. Would either of those be useful?</p>
+          <p class="closing">Best,<br>[Your Name]</p>
+          <p class="ps">P.S. The average compliance review for a new cloud data processor takes 6-12 weeks and involves legal, infosec, and regulatory teams. Flow Dictation's architecture eliminates that process entirely — there is no processor to review.</p>
+        </div>
+      </div>
+
+      <!-- Engineering -->
+      <div id="email-engineering" class="card fade-in">
+        <span class="badge badge--engineering">Engineering</span>
+        <div class="subject-line">Subject: Your GPU workstations can do more than CAD</div>
+        <div class="target-role">CIO / VP Digital Engineering</div>
+        <div class="letter letter--engineering">
+          <p class="salutation">Hi [First Name],</p>
+          <p>Your engineers are carrying NVIDIA RTX workstations that can render million-polygon assemblies and run CFD simulations. When those engineers need to dictate a site inspection report, a project status update, or design documentation, they are either typing it out manually or using a cloud dictation tool that sends their project data to someone else's server.</p>
+          <p>Flow Dictation puts that GPU to work for dictation. It runs entirely on the workstation — faster-whisper for speech recognition, a local 7B-parameter LLM for text cleanup, formatting, and punctuation. The engineer holds a hotkey, speaks, releases, and cleaned text appears in whatever application they are working in. The pipeline takes about two to three seconds for typical dictation. No internet connection required. No subscription. No cloud.</p>
+          <p>The cost argument is straightforward: you have already paid for the hardware. Flow Dictation is a one-time software purchase that runs on GPUs your team already owns. Compare that to cloud dictation tools at $15-30/user/month or Dragon at $699/seat. For a team of 500 engineers, that is a significant line item you can eliminate.</p>
+          <p>Would 15 minutes work for a quick demo? I can show it running on a standard RTX workstation doing exactly the kind of dictation your engineers do daily — field reports, RFIs, inspection notes.</p>
+          <p class="closing">Best,<br>[Your Name]</p>
+          <p class="ps">P.S. Field engineers who dictate instead of type produce documentation 3-4x faster. For teams doing daily site reports, that is 30-60 minutes per person per day recovered for actual engineering work.</p>
+        </div>
+      </div>
+
+      <!-- AI / ML -->
+      <div id="email-ai" class="card fade-in">
+        <span class="badge badge--ai">AI / ML</span>
+        <div class="subject-line">Subject: Your team handles sensitive data — so does your mic</div>
+        <div class="target-role">CISO / VP Engineering</div>
+        <div class="letter letter--ai">
+          <p class="salutation">Hi [First Name],</p>
+          <p>Your company builds AI that runs on private infrastructure because your clients demand it. Your engineers handle proprietary training data, model architectures, research that is months or years ahead of publication, and client data under strict contractual controls. The security posture you maintain for your product should extend to every tool your team uses internally — including dictation.</p>
+          <p>Flow Dictation is a locally-run voice-to-text application built on the same architectural philosophy your company already believes in: local models, local inference, zero data transmission. It uses faster-whisper for transcription and a 7B-parameter LLM (Qwen2.5-7B, quantized) for intelligent text cleanup. Both models run on the user's NVIDIA GPU. No audio or text ever leaves the machine. No cloud API. No telemetry. No data aggregation.</p>
+          <p>Your platform runs on client private networks with zero data aggregation. Should your internal dictation tool not work the same way? Your team already has the hardware — RTX GPUs are standard equipment for ML engineers. Flow Dictation runs on that hardware with no additional infrastructure.</p>
+          <p>I would enjoy a 15-minute conversation about how this fits your internal tooling stack. We can also do a no-commitment pilot with your security team's full involvement. What works best?</p>
+          <p class="closing">Best,<br>[Your Name]</p>
+          <p class="ps">P.S. The irony is not lost on anyone: AI companies that build private, secure AI infrastructure for clients often use cloud-based tools internally. Flow Dictation closes that gap for voice input.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: LINKEDIN TEMPLATES -->
+    <section id="linkedin">
+      <h2 class="section-heading fade-in">LinkedIn Templates</h2>
+      <p class="section-desc fade-in">Connection request (under 300 characters) paired with a follow-up message for each vertical.</p>
+
+      <!-- LinkedIn: Defense -->
+      <div id="li-defense" class="card fade-in">
+        <span class="badge badge--defense">Defense</span>
+        <div class="linkedin-pair">
+          <div class="linkedin-card linkedin-card--defense">
+            <div class="linkedin-label">Connection Request</div>
+            <p>Hi [First Name], I saw [Company]'s work on [specific program or digital initiative]. I built a voice-to-text tool that runs entirely on local GPUs — no cloud, no network dependency. Designed for environments where data cannot leave the machine. Would love to connect.</p>
+            <div class="char-count">&lt; 300 characters</div>
+          </div>
+          <div class="linkedin-card linkedin-card--defense">
+            <div class="linkedin-label">Follow-Up Message</div>
+            <p>[First Name], thanks for connecting.</p>
+            <p>Quick context on why I reached out — I built Flow Dictation, a voice-to-text app that runs 100% on NVIDIA RTX workstations. No cloud, no internet required, no data leaves the machine. It uses faster-whisper for transcription and a local LLM for text cleanup and formatting.</p>
+            <p>I built it because I kept hearing the same problem from defense engineers: cloud dictation is impossible on classified programs, Dragon is aging and expensive, and people end up just typing everything manually. Flow Dictation works on hardware your teams already have deployed.</p>
+            <p>Would a 15-minute demo be worth your time? Happy to tailor it to your environment. No pressure either way — just thought it might be relevant to what your team is working on.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- LinkedIn: Legal -->
+      <div id="li-legal" class="card fade-in">
+        <span class="badge badge--legal">Legal</span>
+        <div class="linkedin-pair">
+          <div class="linkedin-card linkedin-card--legal">
+            <div class="linkedin-label">Connection Request</div>
+            <p>Hi [First Name], I noticed [Firm]'s focus on [data privacy practice / specific practice area]. I built a dictation tool where nothing leaves the attorney's workstation — no cloud, no third-party processor. Thought it might be relevant. Would love to connect.</p>
+            <div class="char-count">&lt; 300 characters</div>
+          </div>
+          <div class="linkedin-card linkedin-card--legal">
+            <div class="linkedin-label">Follow-Up Message</div>
+            <p>[First Name], appreciate the connection.</p>
+            <p>I built Flow Dictation specifically for environments where data sensitivity makes cloud tools a non-starter. It is a voice-to-text app that runs entirely on the attorney's NVIDIA RTX workstation — transcription and AI text cleanup both happen locally. No audio or text is ever transmitted anywhere.</p>
+            <p>The practical difference for attorneys: dictate a client email, and the local LLM reformats it into properly punctuated, professionally toned text automatically. Dictation presets for formal correspondence, casual notes, and technical documentation. No Dragon subscription at $699/seat, no cloud privilege risk.</p>
+            <p>I have been thinking a lot about how the Proskauer and Orrick incidents changed the conversation around cloud tools at firms. Would you be open to a quick demo call? I can show the full pipeline in 15 minutes.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- LinkedIn: Healthcare -->
+      <div id="li-health" class="card fade-in">
+        <span class="badge badge--health">Healthcare</span>
+        <div class="linkedin-pair">
+          <div class="linkedin-card linkedin-card--health">
+            <div class="linkedin-label">Connection Request</div>
+            <p>Hi [First Name], saw [Organization]'s work on [clinical AI / EHR initiative / specific program]. I built a dictation tool that keeps all voice data on the clinician's machine — no cloud, no BAA needed. Thought it might be worth connecting over.</p>
+            <div class="char-count">&lt; 300 characters</div>
+          </div>
+          <div class="linkedin-card linkedin-card--health">
+            <div class="linkedin-label">Follow-Up Message</div>
+            <p>[First Name], thanks for connecting.</p>
+            <p>I built Flow Dictation because the cloud ambient AI market is booming, but there are departments and use cases where sending voice data off-device is a hard no — behavioral health, substance abuse treatment, and any setting where a breach would be catastrophic.</p>
+            <p>Flow Dictation runs entirely on the clinician's NVIDIA RTX workstation. Faster-whisper handles transcription, a local LLM cleans up the text with proper medical formatting and punctuation. The full pipeline takes about two to three seconds. No cloud, no BAA, no third-party processor.</p>
+            <p>It is not a replacement for ambient AI in the exam room — it is a complement for the cases where local processing is the only acceptable option. Would a brief demo be useful? I can show it running with clinical dictation examples.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- LinkedIn: Finance -->
+      <div id="li-finance" class="card fade-in">
+        <span class="badge badge--finance">Finance</span>
+        <div class="linkedin-pair">
+          <div class="linkedin-card linkedin-card--finance">
+            <div class="linkedin-label">Connection Request</div>
+            <p>Hi [First Name], I saw [Company]'s approach to [internal AI tooling / AI governance / specific initiative]. I built a voice-to-text tool that runs entirely on local GPUs — no cloud dependency, no third-party data processor. Thought it might align. Would love to connect.</p>
+            <div class="char-count">&lt; 300 characters</div>
+          </div>
+          <div class="linkedin-card linkedin-card--finance">
+            <div class="linkedin-label">Follow-Up Message</div>
+            <p>[First Name], thanks for the connection.</p>
+            <p>I have been following how [Company] approaches AI governance — particularly the emphasis on keeping sensitive data within controlled infrastructure. That is exactly the architecture behind Flow Dictation.</p>
+            <p>It is a voice-to-text app that runs entirely on NVIDIA RTX workstations. Transcription and AI text cleanup both execute locally. No audio or text ever leaves the machine. For trading notes, deal memos, research commentary — anything where the content is sensitive and the regulatory environment is strict — it removes a third-party data processor from the audit chain entirely.</p>
+            <p>One-time purchase, no subscription, runs on hardware your quant and engineering teams already have. Would a 15-minute demo be worth exploring? Happy to involve your compliance or security team from the start.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- LinkedIn: Engineering -->
+      <div id="li-engineering" class="card fade-in">
+        <span class="badge badge--engineering">Engineering</span>
+        <div class="linkedin-pair">
+          <div class="linkedin-card linkedin-card--engineering">
+            <div class="linkedin-label">Connection Request</div>
+            <p>Hi [First Name], noticed [Company]'s investment in [digital engineering / BIM / specific technology]. I built a dictation tool that runs on the same RTX workstations your engineers already use — no cloud, no subscription. Thought it might be relevant.</p>
+            <div class="char-count">&lt; 300 characters</div>
+          </div>
+          <div class="linkedin-card linkedin-card--engineering">
+            <div class="linkedin-label">Follow-Up Message</div>
+            <p>[First Name], thanks for connecting.</p>
+            <p>I built Flow Dictation after realizing that engineers with $3,000+ GPU workstations were still typing out field reports and inspection notes manually. The workstation has the compute — why not use it for dictation?</p>
+            <p>Flow Dictation runs entirely on NVIDIA RTX GPUs. Hold a hotkey, speak, release — cleaned, formatted text appears in whatever application you are working in. The local LLM handles punctuation, grammar, and even adapts tone based on presets (formal reports vs. quick notes). Two to three seconds from speech to text.</p>
+            <p>No cloud, no subscription, no per-seat licensing. It runs on hardware your teams already own. For a team of engineers doing daily site reports or project documentation, the time savings add up fast. Would a quick demo be useful?</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- LinkedIn: AI/ML -->
+      <div id="li-ai" class="card fade-in">
+        <span class="badge badge--ai">AI / ML</span>
+        <div class="linkedin-pair">
+          <div class="linkedin-card linkedin-card--ai">
+            <div class="linkedin-label">Connection Request</div>
+            <p>Hi [First Name], I admire how [Company] approaches local/private AI deployment. I built a voice-to-text tool on the same philosophy — faster-whisper + local LLM, everything on-device, zero cloud. Would love to connect and share notes.</p>
+            <div class="char-count">&lt; 300 characters</div>
+          </div>
+          <div class="linkedin-card linkedin-card--ai">
+            <div class="linkedin-label">Follow-Up Message</div>
+            <p>[First Name], appreciate the connection.</p>
+            <p>I figured this might resonate with you given [Company]'s approach to AI infrastructure. I built Flow Dictation as a fully local voice-to-text pipeline — faster-whisper for transcription, Qwen2.5-7B (Q4_K_M GGUF) for text cleanup, everything running on a single NVIDIA RTX GPU. No cloud, no telemetry, no data leaves the machine.</p>
+            <p>The text cleanup LLM is what makes it different from other Whisper wrappers. It handles punctuation, formatting, tone adjustment (email vs. casual vs. technical docs), and even code dictation. The full pipeline runs in about two to three seconds.</p>
+            <p>I built it as a solo developer and would genuinely value feedback from someone who thinks about local AI architecture every day. Would you be open to a quick call or even just trying it out? No pitch — mostly looking for technical feedback from people who know this space.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: TOP 5 PERSONALIZED -->
+    <section id="personalized">
+      <h2 class="section-heading fade-in">Top 5 Personalized Emails</h2>
+      <p class="section-desc fade-in">Company-specific hooks for the highest-priority outbound targets.</p>
+
+      <!-- Northrop Grumman -->
+      <div id="lead-northrop" class="company-card fade-in">
+        <div class="company-name">Northrop Grumman</div>
+        <div class="company-hook">Hook: RTX PRO Server rollout to 100,000 employees</div>
+        <div class="letter letter--defense">
+          <p class="salutation">Hi [First Name],</p>
+          <p>I read about Northrop Grumman's announced deployment of NVIDIA RTX PRO Servers to 100,000 employees. That is one of the largest enterprise GPU rollouts I have seen, and it signals a serious commitment to putting compute where the work happens — on the engineer's desk, not in a distant data center.</p>
+          <p>I built Flow Dictation to take advantage of exactly that architecture. It is a voice-to-text application that runs entirely on NVIDIA RTX GPUs — faster-whisper for transcription, a local 7B-parameter LLM for text cleanup. Everything executes on the workstation. No cloud. No network dependency.</p>
+          <p>For Northrop Grumman specifically: (1) classified programs cannot use cloud dictation — Flow Dictation has zero network dependencies and is CMMC 2.0 / ITAR compliant by architecture; (2) you are about to have 100,000 machines with the compute to run this — zero additional hardware investment; (3) your engineers produce enormous volumes of documentation and dictation at 150+ wpm versus typing at 40-60 is a material productivity multiplier.</p>
+          <p>I would welcome 15 minutes to demonstrate the product. Would a demo or a scoped pilot for a specific business unit be more useful?</p>
+          <p class="closing">Best,<br>[Your Name]</p>
+          <p class="ps">P.S. At 100,000 seats, even a conservative estimate of 20 minutes saved per engineer per day on documentation translates to over 33,000 person-hours recovered daily — the equivalent of adding 4,000+ full-time engineers to your workforce.</p>
+        </div>
+      </div>
+
+      <!-- Lockheed Martin -->
+      <div id="lead-lockheed" class="company-card fade-in">
+        <div class="company-name">Lockheed Martin</div>
+        <div class="company-hook">Hook: NVIDIA AI Enterprise partnership, classified programs at scale</div>
+        <div class="letter letter--defense">
+          <p class="salutation">Hi [First Name],</p>
+          <p>Lockheed Martin's partnership with NVIDIA on AI Enterprise — and the scale at which your engineers work on programs like F-35, Orion, and classified space systems — tells me your organization has already solved the hard problem of deploying GPU compute to engineering teams. What I have not seen solved is giving those engineers a modern dictation tool that actually works in their environment.</p>
+          <p>Cloud dictation is impossible on classified programs. Dragon NaturallySpeaking is $699/seat, has not meaningfully improved in years, and has no AI text cleanup. Most engineers just type. On programs that generate tens of thousands of pages of technical documentation annually, that is an enormous amount of time spent on a task that should be faster.</p>
+          <p>Flow Dictation was built for exactly this scenario. It runs entirely on NVIDIA RTX workstations — faster-whisper for transcription, a local 7B-parameter LLM for text cleanup and formatting. Zero network dependency. The engineer holds a hotkey, speaks, releases, and properly formatted text appears in two to three seconds.</p>
+          <p>Could we schedule a 15-minute demo? I am also happy to structure a scoped pilot for a single program or business area.</p>
+          <p class="closing">Best,<br>[Your Name]</p>
+          <p class="ps">P.S. Your NVIDIA AI Enterprise partnership positions Lockheed Martin to lead on exactly this kind of local AI tooling. Flow Dictation is a practical, deployable example of what local AI can do for engineering productivity today.</p>
+        </div>
+      </div>
+
+      <!-- Kirkland & Ellis -->
+      <div id="lead-kirkland" class="company-card fade-in">
+        <div class="company-name">Kirkland &amp; Ellis</div>
+        <div class="company-hook">Hook: Does your own dictation meet the standard you advise clients on?</div>
+        <div class="letter letter--legal">
+          <p class="salutation">Hi [First Name],</p>
+          <p>Kirkland &amp; Ellis has one of the most respected cybersecurity and data privacy practices in the world. Your attorneys advise Fortune 500 companies on data protection, breach response, and regulatory compliance. I want to ask a direct question: does the dictation tool your own attorneys use meet the standard your firm recommends to clients?</p>
+          <p>If Kirkland attorneys dictate deal terms, litigation strategy, or privileged client communications into a cloud transcription tool, that data is processed on third-party servers. The privilege implications of a breach are not theoretical — Proskauer Rose had 184,000 privileged files exposed, and Orrick settled for $8M after a breach affecting client data.</p>
+          <p>Flow Dictation eliminates that risk. It runs entirely on the attorney's workstation. Transcription and AI text cleanup both execute on the machine's NVIDIA RTX GPU. No audio is transmitted. No text is transmitted. The Email/Formal dictation preset produces text ready for client communications. At a fraction of Dragon's $699/seat price, with no per-seat subscription.</p>
+          <p>I would appreciate 15 minutes to demonstrate the product. We can also arrange a pilot for a specific practice group.</p>
+          <p class="closing">Best,<br>[Your Name]</p>
+          <p class="ps">P.S. Kirkland &amp; Ellis is consistently ranked #1 on the AmLaw 100 by revenue. The dictation tool your attorneys use should reflect the same standard of excellence and security that earned that position.</p>
+        </div>
+      </div>
+
+      <!-- Kaiser Permanente -->
+      <div id="lead-kaiser" class="company-card fade-in">
+        <div class="company-name">Kaiser Permanente</div>
+        <div class="company-hook">Hook: Complement to Abridge for high-sensitivity departments</div>
+        <div class="letter letter--health">
+          <p class="salutation">Hi [First Name],</p>
+          <p>Kaiser Permanente's deployment of Abridge across your health system is one of the largest GenAI rollouts in healthcare. The early results on clinician satisfaction and documentation efficiency are compelling. I am not here to suggest you replace Abridge. I am here to suggest there are departments where sending voice data to a cloud processor is a harder decision.</p>
+          <p>Behavioral health. Substance abuse treatment. HIV/AIDS clinics. Reproductive health services. Adolescent psychiatry. These departments handle records with additional state and federal protections beyond standard HIPAA. For these settings, a dictation tool where no audio or text ever leaves the clinician's workstation is not just a preference — it is a risk management decision.</p>
+          <p>Flow Dictation runs entirely on NVIDIA RTX workstations. Faster-whisper handles transcription; a local 7B-parameter LLM handles text cleanup and medical terminology formatting. No cloud, no BAA needed. It complements your Abridge deployment by covering the cases where cloud processing is not the right fit.</p>
+          <p>Could we discuss this over a 15-minute call? I would also welcome a conversation with your compliance and clinical informatics teams.</p>
+          <p class="closing">Best,<br>[Your Name]</p>
+          <p class="ps">P.S. HHS reported $8.3M in HIPAA fines in 2025 alone. For KP's highest-sensitivity departments, removing the cloud data processor from the dictation workflow eliminates an entire category of breach risk.</p>
+        </div>
+      </div>
+
+      <!-- JPMorgan Chase -->
+      <div id="lead-jpmorgan" class="company-card fade-in">
+        <div class="company-name">JPMorgan Chase</div>
+        <div class="company-hook">Hook: Extends the walled-garden AI philosophy to voice input</div>
+        <div class="letter letter--finance">
+          <p class="salutation">Hi [First Name],</p>
+          <p>JPMorgan Chase's deployment of LLM Suite to 250,000+ employees is the clearest example in financial services of how to do enterprise AI right — a walled-garden environment where sensitive data stays within JPMC's controlled infrastructure. No third-party processors. No data leaving the perimeter.</p>
+          <p>Flow Dictation extends that same philosophy to voice input. It is a locally-run voice-to-text application where transcription and AI text cleanup both execute on the user's NVIDIA RTX workstation. No audio leaves the machine. No text leaves the machine. For JPMC, the use cases are immediate: trading floor notes, deal memos, research commentary, compliance documentation.</p>
+          <p>No third-party data processor means no additional vendor security review, no new data processing agreement, and no new line item for SEC or FINRA examiners to scrutinize. The voice data stays in the same walled garden you have already built.</p>
+          <p>I would value 15 minutes to demonstrate the product and discuss how it fits within JPMC's AI infrastructure. We can involve your security and compliance teams from the outset.</p>
+          <p class="closing">Best,<br>[Your Name]</p>
+          <p class="ps">P.S. You built LLM Suite because you understood that enterprise AI needs to operate within your security perimeter. Voice input is the last major productivity tool that still depends on cloud processors. Flow Dictation closes that gap.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: COMMUNITY POSTS -->
+    <section id="community">
+      <h2 class="section-heading fade-in">Community Posts</h2>
+      <p class="section-desc fade-in">Launch posts for technical communities and product directories.</p>
+
+      <!-- Reddit -->
+      <div id="post-reddit" class="community-card fade-in">
+        <div class="community-platform">r/LocalLLaMA</div>
+        <div class="community-title">I built a local voice-to-text app that uses Whisper + a local LLM to clean up dictation — no cloud, everything on your GPU</div>
+        <p>Hey r/LocalLLaMA,</p>
+        <p>I have been building a Windows dictation app called Flow Dictation and wanted to share it here since this community is basically the reason it exists. The core idea: push-to-talk voice dictation where transcription AND text cleanup both run locally on your NVIDIA GPU. No cloud APIs, no data transmission, no subscriptions.</p>
+        <p><strong>How it works:</strong></p>
+        <ul>
+          <li>Hold hotkey (Right Ctrl by default) and speak</li>
+          <li>Release hotkey — audio gets sent to faster-whisper (large-v3-turbo) running on your GPU</li>
+          <li>Whisper output goes to a local LLM (Qwen2.5-7B, Q4_K_M GGUF via llama-cpp-python with CUDA)</li>
+          <li>LLM cleans up the text — punctuation, grammar, formatting, sentence structure</li>
+          <li>Cleaned text gets pasted into whatever app you are working in</li>
+        </ul>
+        <p>End-to-end latency is about 2-3 seconds for a typical dictation. The LLM cleanup step is what makes this genuinely usable as a daily driver — raw Whisper output is fine, but the LLM turns it into text you would actually send in an email or put in a document.</p>
+        <p><strong>Dictation presets:</strong> General, Email/Formal, Chat/Casual, Code, Technical/Docs, and Custom (write your own system prompt). Other features include VAD with silence timeout, snippet library, personal dictionary, system tray with color-coded status, and a settings GUI.</p>
+        <p><strong>Hardware:</strong> NVIDIA RTX with 8GB+ VRAM (tested on RTX 5070 Ti 16GB). ~4GB for Whisper + ~5GB for the LLM. Windows 11, CUDA 12.x, Python 3.12+.</p>
+        <p><strong>Feedback wanted:</strong> Linux support demand? Would a 3B cleanup model be good enough for 8GB cards? Live transcription preview? Dictation history? Model swapping?</p>
+        <p>This community taught me most of what I know about local inference, so it felt right to share it here first.</p>
+      </div>
+
+      <!-- Hacker News -->
+      <div id="post-hn" class="community-card fade-in">
+        <div class="community-platform">Hacker News</div>
+        <div class="community-title">Show HN: Flow Dictation — Local voice-to-text with AI cleanup, runs entirely on your GPU</div>
+        <p>Flow Dictation is a Windows voice-to-text app where everything runs locally on an NVIDIA RTX GPU. The pipeline is: push-to-talk recording, faster-whisper transcription, then a local 7B LLM (Qwen2.5-7B) cleans up the text — punctuation, grammar, formatting — before pasting it into your active application. End-to-end latency is 2-3 seconds.</p>
+        <p>The LLM cleanup is what differentiates it from other Whisper tools. Raw Whisper output is usable but rough. The cleanup step produces text you would actually put in an email or document without editing. Presets adapt the output for different contexts: formal emails, casual messages, code dictation, technical docs.</p>
+        <p>No cloud component, no subscription, no data transmission. Requires NVIDIA RTX GPU with 8GB+ VRAM and Windows 11. Built by a solo developer as an alternative to Dragon NaturallySpeaking and cloud dictation services.</p>
+      </div>
+
+      <!-- Product Hunt -->
+      <div id="post-ph" class="community-card fade-in">
+        <div class="community-platform">Product Hunt</div>
+        <div class="community-title">Voice-to-text that never leaves your machine.</div>
+        <p>Flow Dictation is a voice-to-text application for Windows that runs entirely on your computer. Hold a hotkey, speak, release — and cleaned, formatted text appears in your active application in seconds. No cloud. No subscription. No data ever leaves your machine.</p>
+        <p>What makes Flow Dictation different is the AI text cleanup pipeline. After faster-whisper transcribes your speech on your GPU, a local large language model (Qwen2.5-7B) cleans up the output — adding punctuation, fixing grammar, adjusting formatting and tone. Dictation presets let you switch between formal email, casual chat, technical documentation, and code dictation.</p>
+        <p><strong>Key features:</strong> 100% local processing, AI-powered text cleanup via local LLM, dictation presets (General, Email/Formal, Chat/Casual, Code, Technical/Docs, Custom), push-to-talk workflow, VAD with auto-stop, personal dictionary, snippet library, system tray app, one-time purchase.</p>
+        <div class="makers-comment">
+          <div class="makers-label">Maker's Comment</div>
+          <p>Hi everyone — I am a solo developer and I built Flow Dictation because I was frustrated with the state of voice-to-text tools. Cloud dictation services send your voice data to third-party servers. Dragon is local but expensive, aging, and has no AI text cleanup. Open-source Whisper tools give you a raw transcript and stop there.</p>
+          <p>I wanted something that combined the best of all three: local processing, modern AI accuracy, and intelligent text cleanup that produces output you can actually use. The key insight was that modern NVIDIA GPUs have enough compute to run both a speech recognition model and a text cleanup LLM simultaneously — so the whole pipeline can happen on your machine in a few seconds.</p>
+          <p>I would love your feedback — especially on the text cleanup quality and any features you would want to see next.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: FOLLOW-UP TEMPLATES -->
+    <section id="followups">
+      <h2 class="section-heading fade-in">Follow-Up Templates</h2>
+      <p class="section-desc fade-in">Timed follow-ups that add value rather than just asking again.</p>
+
+      <!-- Follow-Up #1 -->
+      <div class="followup-card fade-in">
+        <div class="followup-label">Follow-Up #1</div>
+        <div class="followup-timing">Send 5-7 days after initial email</div>
+        <div class="letter">
+          <p><strong>Subject:</strong> Re: [Original Subject Line]</p>
+          <p class="salutation" style="margin-top:1rem;">Hi [First Name],</p>
+          <p>I wanted to follow up on my email from last week about Flow Dictation.</p>
+          <p>I realized I should share one thing I did not mention: the setup takes about five minutes. Download, install, and the application handles model downloads automatically on first launch. There is no server infrastructure, no IT deployment project, and no vendor integration. An individual user can be dictating within minutes of installation.</p>
+          <p>If a 15-minute demo would be useful, I am happy to work around your schedule. And if the timing is not right, no worries at all — I appreciate your time either way.</p>
+          <p class="closing">Best,<br>[Your Name]</p>
+        </div>
+      </div>
+
+      <!-- Follow-Up #2 -->
+      <div class="followup-card fade-in">
+        <div class="followup-label">Follow-Up #2</div>
+        <div class="followup-timing">Send 14 days after initial email</div>
+        <div class="letter">
+          <p><strong>Subject:</strong> Re: [Original Subject Line] — quick question</p>
+          <p class="salutation" style="margin-top:1rem;">Hi [First Name],</p>
+          <p>Last follow-up from me on this. I know inboxes are relentless.</p>
+          <p>Would a 2-minute demo video be more useful than a live call? I can send a recording of the full pipeline — dictation to cleaned text — so you can evaluate it on your own time.</p>
+          <p>If there is someone else on your team this would be more relevant for, happy to connect with them directly.</p>
+          <p>Either way, thanks for your time.</p>
+          <p class="closing">Best,<br>[Your Name]</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ── Scroll-spy JavaScript ── -->
+<script>
+(function() {
+  'use strict';
+
+  var links = document.querySelectorAll('.sidebar nav a[data-section]');
+  var sections = [];
+
+  links.forEach(function(link) {
+    var id = link.getAttribute('data-section');
+    var el = document.getElementById(id);
+    if (el) {
+      sections.push({ id: id, el: el, link: link });
+    }
+  });
+
+  function onScroll() {
+    var scrollY = window.scrollY || window.pageYOffset;
+    var windowH = window.innerHeight;
+    var threshold = scrollY + windowH * 0.3;
+    var active = null;
+
+    for (var i = sections.length - 1; i >= 0; i--) {
+      var rect = sections[i].el.getBoundingClientRect();
+      var top = rect.top + scrollY;
+      if (top <= threshold) {
+        active = sections[i];
+        break;
+      }
+    }
+
+    if (!active && sections.length > 0) {
+      active = sections[0];
+    }
+
+    links.forEach(function(link) {
+      link.classList.remove('active');
+    });
+
+    if (active) {
+      active.link.classList.add('active');
+
+      // Also activate parent if this is a sub-item
+      var parentLi = active.link.closest('ul').closest('li');
+      if (parentLi) {
+        var parentLink = parentLi.querySelector(':scope > a');
+        if (parentLink) {
+          parentLink.classList.add('active');
+        }
+      }
+    }
+  }
+
+  // Debounced scroll handler
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        onScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // Initial call
+  onScroll();
+
+  // Intersection Observer for fade-in animations
+  if ('IntersectionObserver' in window) {
+    var fadeEls = document.querySelectorAll('.fade-in');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.05,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    fadeEls.forEach(function(el) {
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
+    });
+  }
+})();
+</script>
+
+</body></html>
